@@ -19,6 +19,7 @@ const LESSONS = Object.assign(
 
 const DEFAULT_STATE = () => ({
   student: "Alexa",
+  age: null,
   completed: {},
   stars: 0,
   badges: [],
@@ -31,6 +32,87 @@ const DEFAULT_STATE = () => ({
   trackCapNotes: {},
   pathIndex: 0
 });
+
+const LAST_STUDENT_KEY = "codeCompanion_lastStudent_v3";
+
+/** Age → recommended start (Alexa ~10+ → Roblox). */
+function getAgeProfile(age) {
+  const a = Number(age);
+  if (!a || a < 5) {
+    return {
+      band: "—",
+      startTrack: "scratchjr",
+      recommended: ["scratchjr", "hopscotch"],
+      earlier: [],
+      pathLabel: "Pick an age to get a path",
+      forward: ["scratchjr", "hopscotch", "scratch", "appinventor", "roblox", "python", "unity", "htmlcss", "javascript", "fullstack", "capA", "capB"]
+    };
+  }
+  if (a <= 7) {
+    return {
+      band: "5–7",
+      startTrack: "scratchjr",
+      recommended: ["scratchjr", "hopscotch"],
+      earlier: [],
+      pathLabel: "Scratch Jr → Hopscotch",
+      forward: ["scratchjr", "hopscotch", "scratch", "appinventor", "roblox", "python", "unity", "htmlcss", "javascript", "fullstack", "capA", "capB"]
+    };
+  }
+  if (a <= 9) {
+    return {
+      band: "8–9",
+      startTrack: "scratch",
+      recommended: ["scratch", "appinventor"],
+      earlier: ["scratchjr", "hopscotch"],
+      pathLabel: "Scratch → App Inventor",
+      forward: ["scratch", "appinventor", "roblox", "python", "unity", "htmlcss", "javascript", "fullstack", "capA", "capB"]
+    };
+  }
+  if (a <= 11) {
+    return {
+      band: "10–11",
+      startTrack: "roblox",
+      recommended: ["roblox", "appinventor"],
+      earlier: ["scratchjr", "hopscotch", "scratch"],
+      pathLabel: "Roblox (Luau) → (App Inventor optional)",
+      forward: ["roblox", "appinventor", "python", "unity", "htmlcss", "javascript", "fullstack", "capA", "capB"]
+    };
+  }
+  if (a <= 13) {
+    return {
+      band: "12–13",
+      startTrack: "python",
+      recommended: ["python", "roblox", "unity"],
+      earlier: ["scratchjr", "hopscotch", "scratch", "appinventor"],
+      pathLabel: "Python / Roblox → Unity (optional)",
+      forward: ["python", "roblox", "unity", "htmlcss", "javascript", "fullstack", "capA", "capB"]
+    };
+  }
+  return {
+    band: "14+",
+    startTrack: "htmlcss",
+    recommended: ["htmlcss", "javascript", "fullstack"],
+    earlier: ["scratchjr", "hopscotch", "scratch", "appinventor", "python", "unity"],
+    pathLabel: "HTML/CSS → JavaScript → Full Stack (Roblox still open)",
+    forward: ["htmlcss", "javascript", "fullstack", "roblox", "capA", "capB"]
+  };
+}
+
+function ageProfile() {
+  return getAgeProfile(state.age);
+}
+
+function needsOnboarding() {
+  return !state.student || state.age === null || state.age === undefined || state.age === "";
+}
+
+function rememberLastStudent(name) {
+  try { localStorage.setItem(LAST_STUDENT_KEY, name); } catch (e) {}
+}
+
+function readLastStudent() {
+  try { return localStorage.getItem(LAST_STUDENT_KEY) || ""; } catch (e) { return ""; }
+}
 
 function storageKey(name) {
   return "codeCompanion_v2_" + (name || "Alexa").trim().toLowerCase();
@@ -57,6 +139,7 @@ function loadState(name) {
 function saveState(state) {
   state.lastActivity = new Date().toISOString();
   localStorage.setItem(storageKey(state.student), JSON.stringify(state));
+  rememberLastStudent(state.student);
 }
 
 let state = loadState("Alexa");
@@ -71,7 +154,7 @@ let skipOffered = false;
 const $ = (id) => document.getElementById(id);
 
 function showView(id) {
-  ["home", "track", "lesson", "capstone", "trackcap", "parent"].forEach((v) => {
+  ["welcome", "home", "track", "lesson", "capstone", "trackcap", "parent"].forEach((v) => {
     const el = $("view-" + v);
     if (el) el.classList.toggle("hidden", v !== id);
   });
@@ -122,7 +205,16 @@ function renderStars(el, n) {
 
 function updateHome() {
   $("helloName").textContent = state.student || "Friend";
-  $("studentName").value = state.student || "Alexa";
+  if ($("studentName")) $("studentName").value = state.student || "Alexa";
+  const profile = ageProfile();
+  const chip = $("homeAgeChip");
+  if (chip) {
+    chip.textContent = "🎂 Age " + (state.age || "?") + " · Start: " + (
+      (TRACKS.find((t) => t.id === profile.startTrack) || {}).emoji || ""
+    ) + " " + ((TRACKS.find((t) => t.id === profile.startTrack) || {}).name || profile.startTrack);
+  }
+  const tag = $("homeTagline");
+  if (tag) tag.textContent = "Path for ages " + profile.band + ": " + profile.pathLabel;
   const done = completedCount();
   const total = totalLessons();
   const pct = Math.round((done / Math.max(total, 1)) * 100);
@@ -141,18 +233,41 @@ function updateHome() {
   renderTracks();
 }
 
+function makeTrackCard(t, extraClass) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "track-card " + (t.css || "") + (extraClass ? " " + extraClass : "");
+  const done = trackDoneCount(t);
+  const meta = done + "/" + t.lessons.length + " lessons" + (trackComplete(t) ? " ✓" : "");
+  btn.innerHTML =
+    '<div class="track-icon">' + t.emoji + "</div>" +
+    "<h3>" + t.name + "</h3>" +
+    "<p>" + t.desc + "</p>" +
+    '<div class="track-meta">' + meta + "</div>";
+  btn.addEventListener("click", () => openTrack(t.id));
+  return btn;
+}
+
 function renderPath() {
   const path = $("learningPath");
   if (!path) return;
   path.innerHTML = "";
+  const profile = ageProfile();
+  const earlierSet = {};
+  (profile.earlier || []).forEach((id) => { earlierSet[id] = true; });
   const ordered = TRACKS.slice().sort((a, b) => a.order - b.order);
   ordered.forEach((t, i) => {
     const done = trackDoneCount(t);
     const full = trackComplete(t);
     const node = document.createElement("button");
     node.type = "button";
-    node.className = "path-node" + (full ? " done" : done ? " progress" : "");
-    node.title = t.name;
+    let cls = "path-node";
+    if (full) cls += " done";
+    else if (done) cls += " progress";
+    if (t.id === profile.startTrack) cls += " start-here";
+    if (earlierSet[t.id]) cls += " muted";
+    node.className = cls;
+    node.title = t.name + (t.id === profile.startTrack ? " (your start)" : "");
     node.innerHTML =
       '<span class="path-emoji">' + t.emoji + "</span>" +
       '<span class="path-label">' + t.name + "</span>" +
@@ -171,22 +286,41 @@ function renderPath() {
 
 function renderTracks() {
   const grid = $("trackGrid");
+  const earlierGrid = $("earlierTracks");
+  const earlierTitle = $("earlierTitle");
+  if (!grid) return;
   grid.innerHTML = "";
+  if (earlierGrid) earlierGrid.innerHTML = "";
+  const profile = ageProfile();
+  const earlierSet = {};
+  (profile.earlier || []).forEach((id) => { earlierSet[id] = true; });
+  const recSet = {};
+  (profile.recommended || []).forEach((id) => { recSet[id] = true; });
+
+  // Recommended + forward (not in earlier)
   const ordered = TRACKS.slice().sort((a, b) => a.order - b.order);
+  const shown = {};
   ordered.forEach((t) => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "track-card " + (t.css || "");
-    const done = trackDoneCount(t);
-    const meta = done + "/" + t.lessons.length + " lessons" + (trackComplete(t) ? " ✓" : "");
-    btn.innerHTML =
-      '<div class="track-icon">' + t.emoji + "</div>" +
-      "<h3>" + t.name + "</h3>" +
-      "<p>" + t.desc + "</p>" +
-      '<div class="track-meta">' + meta + "</div>";
-    btn.addEventListener("click", () => openTrack(t.id));
-    grid.appendChild(btn);
+    if (earlierSet[t.id]) return;
+    // Prefer showing recommended first visually: still sorted by order among non-earlier
+    const glow = recSet[t.id] || t.id === profile.startTrack;
+    grid.appendChild(makeTrackCard(t, glow ? "recommended-glow" : ""));
+    shown[t.id] = true;
   });
+
+  // Earlier levels (optional)
+  let earlierCount = 0;
+  ordered.forEach((t) => {
+    if (!earlierSet[t.id]) return;
+    if (earlierGrid) earlierGrid.appendChild(makeTrackCard(t, ""));
+    earlierCount++;
+  });
+  if (earlierTitle) {
+    earlierTitle.classList.toggle("hidden", earlierCount === 0);
+  }
+  if (earlierGrid) {
+    earlierGrid.classList.toggle("hidden", earlierCount === 0);
+  }
 }
 
 function openTrack(trackId) {
@@ -615,6 +749,16 @@ function renderCapstone() {
 
 function renderParent() {
   $("parentStudent").textContent = state.student;
+  const profile = ageProfile();
+  if ($("parentAgeLine")) {
+    $("parentAgeLine").textContent = "Age: " + (state.age != null ? state.age : "—") + " (band " + profile.band + ")";
+  }
+  if ($("parentPath")) {
+    const start = TRACKS.find((t) => t.id === profile.startTrack);
+    $("parentPath").textContent =
+      "Recommended path: " + profile.pathLabel +
+      " · Default start: " + (start ? start.emoji + " " + start.name : profile.startTrack);
+  }
   const done = completedCount();
   const total = totalLessons();
   const pct = Math.round((100 * done) / Math.max(total, 1));
@@ -637,64 +781,224 @@ function renderParent() {
     const d = trackDoneCount(t);
     const div = document.createElement("div");
     div.style.marginBottom = "10px";
+    const mark = (profile.recommended || []).indexOf(t.id) !== -1 ? " ⭐" : ((profile.earlier || []).indexOf(t.id) !== -1 ? " (earlier)" : "");
     div.innerHTML =
-      "<strong>" + t.emoji + " " + t.name + "</strong> — " + d + "/" + t.lessons.length +
+      "<strong>" + t.emoji + " " + t.name + "</strong>" + mark + " — " + d + "/" + t.lessons.length +
       '<div class="bar"><span style="width:' + (100 * d) / Math.max(t.lessons.length, 1) + '%"></span></div>';
     pt.appendChild(div);
   });
 }
 
 function continueLearning() {
-  if (state.lastLesson && LESSONS[state.lastLesson] && !state.completed[state.lastLesson]) {
-    startLesson(state.lastLesson);
+  if (needsOnboarding()) {
+    showWelcome();
     return;
   }
-  const ordered = TRACKS.slice().sort((a, b) => a.order - b.order);
-  if (state.lastTrack) {
+  const profile = ageProfile();
+  const earlierSet = {};
+  (profile.earlier || []).forEach((id) => { earlierSet[id] = true; });
+
+  // Resume unfinished lesson if it's not an "earlier" track (unless that's all they have)
+  if (state.lastLesson && LESSONS[state.lastLesson] && !state.completed[state.lastLesson]) {
+    const tr = LESSONS[state.lastLesson].track;
+    if (!earlierSet[tr] || state.lastTrack === tr) {
+      startLesson(state.lastLesson);
+      return;
+    }
+  }
+
+  // Continue last track if age-appropriate (not earlier-only)
+  if (state.lastTrack && !earlierSet[state.lastTrack]) {
     const t = TRACKS.find((x) => x.id === state.lastTrack);
     if (t) {
-      const next = t.lessons.find((id) => !state.completed[id]);
+      const next = t.lessons.find((id) => LESSONS[id] && !state.completed[id]);
       if (next) {
         startLesson(next);
         return;
       }
     }
   }
-  for (let i = 0; i < ordered.length; i++) {
-    const t = ordered[i];
+
+  // Start / continue from age default track, then forward recommended path
+  const forward = profile.forward || [profile.startTrack];
+  for (let i = 0; i < forward.length; i++) {
+    const t = TRACKS.find((x) => x.id === forward[i]);
+    if (!t) continue;
     const next = t.lessons.find((id) => LESSONS[id] && !state.completed[id]);
     if (next) {
       startLesson(next);
       return;
     }
   }
-  openTrack("scratchjr");
+
+  // Fallback: open start track
+  openTrack(profile.startTrack);
+}
+
+let welcomeSelectedAge = null;
+
+function updateWelcomeHint() {
+  const hint = $("welcomeHint");
+  const btn = $("btnStartAdventure");
+  if (!hint || !btn) return;
+  const age = welcomeSelectedAge || Number(($("welcomeAgeNum") && $("welcomeAgeNum").value) || 0);
+  if (!age || age < 5 || age > 18) {
+    hint.textContent = "Pick an age to see your starting track ✨";
+    btn.disabled = true;
+    return;
+  }
+  const profile = getAgeProfile(age);
+  const start = TRACKS.find((t) => t.id === profile.startTrack);
+  hint.textContent =
+    "Ages " + profile.band + " → start at " + (start ? start.emoji + " " + start.name : profile.startTrack) +
+    " · " + profile.pathLabel;
+  btn.disabled = false;
+}
+
+function buildAgeGrid() {
+  const grid = $("ageGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  for (let a = 5; a <= 16; a++) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "age-btn";
+    b.textContent = String(a);
+    b.setAttribute("aria-label", "Age " + a);
+    b.addEventListener("click", () => {
+      welcomeSelectedAge = a;
+      grid.querySelectorAll(".age-btn").forEach((x) => x.classList.remove("selected"));
+      b.classList.add("selected");
+      if ($("welcomeAgeNum")) $("welcomeAgeNum").value = String(a);
+      updateWelcomeHint();
+    });
+    grid.appendChild(b);
+  }
+  const plus = document.createElement("button");
+  plus.type = "button";
+  plus.className = "age-btn";
+  plus.textContent = "17+";
+  plus.setAttribute("aria-label", "Age 17 or older");
+  plus.addEventListener("click", () => {
+    welcomeSelectedAge = 17;
+    grid.querySelectorAll(".age-btn").forEach((x) => x.classList.remove("selected"));
+    plus.classList.add("selected");
+    if ($("welcomeAgeNum")) $("welcomeAgeNum").value = "17";
+    updateWelcomeHint();
+  });
+  grid.appendChild(plus);
+}
+
+function showWelcome(prefill) {
+  buildAgeGrid();
+  welcomeSelectedAge = null;
+  if ($("welcomeName")) {
+    $("welcomeName").value = (prefill && prefill.name) || state.student || "";
+  }
+  if ($("welcomeAgeNum")) {
+    $("welcomeAgeNum").value = (prefill && prefill.age) || state.age || "";
+    if (state.age) welcomeSelectedAge = Number(state.age);
+  }
+  if (welcomeSelectedAge) {
+    const grid = $("ageGrid");
+    if (grid) {
+      grid.querySelectorAll(".age-btn").forEach((btn) => {
+        const label = btn.textContent.replace("+", "");
+        if (Number(label) === welcomeSelectedAge || (welcomeSelectedAge >= 17 && btn.textContent === "17+")) {
+          btn.classList.add("selected");
+        }
+      });
+    }
+  }
+  updateWelcomeHint();
+  showView("welcome");
+}
+
+function finishOnboarding() {
+  let name = (($("welcomeName") && $("welcomeName").value) || "").trim() || "Friend";
+  if (name.length > 24) name = name.slice(0, 24);
+  let age = welcomeSelectedAge || Number(($("welcomeAgeNum") && $("welcomeAgeNum").value) || 0);
+  if (!age || age < 5) {
+    updateWelcomeHint();
+    return;
+  }
+  if (age > 18) age = 18;
+  const existing = loadState(name);
+  state = existing;
+  state.student = name;
+  state.age = age;
+  // If no lastTrack yet, seed to age start
+  const profile = getAgeProfile(age);
+  if (!state.lastTrack) state.lastTrack = profile.startTrack;
+  rememberLastStudent(name);
+  saveState(state);
+  if ($("studentName")) $("studentName").value = name;
+  updateHome();
+  showView("home");
 }
 
 function init() {
-  state = loadState($("studentName").value || "Alexa");
-  updateHome();
+  const last = readLastStudent();
+  const nameGuess = last || (($("studentName") && $("studentName").value) || "Alexa");
+  state = loadState(nameGuess);
+  if (last) state.student = last;
 
-  $("studentName").addEventListener("change", () => {
-    let name = $("studentName").value.trim() || "Alexa";
-    if (name.length > 24) name = name.slice(0, 24);
-    state = loadState(name);
-    state.student = name;
-    saveState(state);
-    updateHome();
-  });
+  buildAgeGrid();
+
+  if ($("welcomeAgeNum")) {
+    $("welcomeAgeNum").addEventListener("input", () => {
+      const v = Number($("welcomeAgeNum").value);
+      welcomeSelectedAge = v || null;
+      const grid = $("ageGrid");
+      if (grid) {
+        grid.querySelectorAll(".age-btn").forEach((btn) => btn.classList.remove("selected"));
+        grid.querySelectorAll(".age-btn").forEach((btn) => {
+          const n = Number(btn.textContent);
+          if (n === v || (v >= 17 && btn.textContent === "17+")) btn.classList.add("selected");
+        });
+      }
+      updateWelcomeHint();
+    });
+  }
+  if ($("btnStartAdventure")) {
+    $("btnStartAdventure").addEventListener("click", finishOnboarding);
+  }
+  if ($("btnChangeAge")) {
+    $("btnChangeAge").addEventListener("click", () => showWelcome({ name: state.student, age: state.age }));
+  }
+
+  if ($("studentName")) {
+    $("studentName").addEventListener("change", () => {
+      let name = $("studentName").value.trim() || "Alexa";
+      if (name.length > 24) name = name.slice(0, 24);
+      const prevAge = state.age;
+      state = loadState(name);
+      state.student = name;
+      if (state.age == null && prevAge != null) state.age = prevAge;
+      rememberLastStudent(name);
+      saveState(state);
+      if (needsOnboarding()) showWelcome({ name: name, age: state.age });
+      else updateHome();
+    });
+  }
 
   $("btnHome").addEventListener("click", () => {
+    if (needsOnboarding()) { showWelcome(); return; }
     updateHome();
     showView("home");
   });
   $("btnBackHome").addEventListener("click", () => {
+    if (needsOnboarding()) { showWelcome(); return; }
     updateHome();
     showView("home");
   });
   $("btnContinue").addEventListener("click", continueLearning);
-  $("btnCapstone").addEventListener("click", () => openTrackCapstone(state.lastTrack || "roblox"));
+  $("btnCapstone").addEventListener("click", () => {
+    const profile = ageProfile();
+    openTrackCapstone(state.lastTrack || profile.startTrack);
+  });
   $("btnParent").addEventListener("click", () => {
+    if (needsOnboarding()) { showWelcome(); return; }
     renderParent();
     showView("parent");
   });
@@ -705,9 +1009,11 @@ function init() {
   $("btnReset").addEventListener("click", () => {
     if (confirm("Reset progress for " + state.student + " on this device?")) {
       const name = state.student;
+      const age = state.age;
       localStorage.removeItem(storageKey(name));
       state = DEFAULT_STATE();
       state.student = name;
+      state.age = age;
       saveState(state);
       updateHome();
       renderParent();
@@ -732,7 +1038,11 @@ function init() {
     saveState(state);
   });
 
-  showView("home");
+  if (needsOnboarding()) showWelcome({ name: state.student, age: state.age });
+  else {
+    updateHome();
+    showView("home");
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);

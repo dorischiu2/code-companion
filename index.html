@@ -20,16 +20,44 @@
     </div>
   </header>
 
-  <section id="view-home">
+  
+  <section id="view-welcome">
+    <div class="card hero welcome-card">
+      <div class="hero-emoji" aria-hidden="true">👋</div>
+      <h1>Welcome to Code Companion!</h1>
+      <p>Tell us your name and age so we pick the right starting spot — not baby programs if you’re bigger!</p>
+
+      <div class="name-row" style="margin-top:18px">
+        <label for="welcomeName">Your name</label>
+        <input class="name-input" id="welcomeName" type="text" maxlength="24" placeholder="Alexa" aria-label="Your name">
+      </div>
+
+      <p class="age-prompt"><strong>How old are you?</strong></p>
+      <div class="age-grid" id="ageGrid" role="group" aria-label="Pick your age"></div>
+
+      <div class="name-row" style="margin-top:12px">
+        <label for="welcomeAgeNum">Or type age</label>
+        <input class="name-input" id="welcomeAgeNum" type="number" min="5" max="18" placeholder="10" aria-label="Type your age">
+      </div>
+
+      <p id="welcomeHint" class="welcome-hint">Pick an age to see your starting track ✨</p>
+      <div style="margin-top:18px">
+        <button class="btn btn-big btn-primary" id="btnStartAdventure" type="button" disabled>🚀 Start my adventure</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-home" class="hidden">
     <div class="card hero">
       <div class="hero-emoji" aria-hidden="true">👾</div>
       <h1>Hi, <span id="helloName">Alexa</span>! 👋</h1>
-      <p>Your coding adventure path — from Scratch Jr all the way to Capstone!</p>
+      <p id="homeTagline">We picked a path that fits your age. You can still open earlier levels anytime.</p>
       <div class="name-row">
         <label for="studentName">Your name</label>
         <input class="name-input" id="studentName" type="text" maxlength="24" value="Alexa" aria-label="Student name">
       </div>
       <div class="stars" id="homeStars" aria-label="Stars earned"></div>
+      <div class="progress-pill" id="homeAgeChip" style="margin-bottom:8px">🎂 Age —</div>
       <div class="progress-pill" id="homeProgress">⭐ 0 stars · keep going!</div>
       <div class="badge-row" id="homeBadges"></div>
       <div style="margin-top:20px">
@@ -45,8 +73,15 @@
       <div class="learning-path" id="learningPath" role="navigation" aria-label="Learning path"></div>
     </div>
 
-    <h2 class="section-title">🎮 All tracks</h2>
+    <h2 class="section-title">⭐ Recommended for you</h2>
     <div class="track-grid" id="trackGrid"></div>
+
+    <h2 class="section-title" id="earlierTitle">📚 Earlier levels <span style="font-weight:600;font-size:0.9rem;color:var(--ink-soft)">(optional)</span></h2>
+    <div class="track-grid earlier-grid" id="earlierTracks"></div>
+
+    <p style="text-align:center;margin-top:12px">
+      <button class="btn btn-ghost" id="btnChangeAge" type="button">🎂 Change name / age</button>
+    </p>
   </section>
 
   <section id="view-track" class="hidden">
@@ -106,7 +141,9 @@
     <div class="card">
       <button class="btn btn-ghost" id="btnParentBack" type="button">← Home</button>
       <h2 style="margin:14px 0 8px;font-size:1.5rem">👨‍👩‍👧 Parent view</h2>
-      <p style="color:var(--ink-soft);margin-bottom:16px">Simple progress for <strong id="parentStudent">Alexa</strong></p>
+      <p style="color:var(--ink-soft);margin-bottom:8px">Simple progress for <strong id="parentStudent">Alexa</strong></p>
+      <p id="parentAgeLine" style="font-weight:800;margin-bottom:8px">Age: —</p>
+      <p id="parentPath" style="color:var(--ink-soft);margin-bottom:16px">Recommended path: —</p>
       <div class="parent-grid" id="parentStats"></div>
       <div style="margin-top:18px">
         <h3 style="margin-bottom:8px">Tracks</h3>

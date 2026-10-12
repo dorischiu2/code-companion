@@ -275,3 +275,55 @@ footer.tip, .footer.tip {
 .track-card.t-fs { background: linear-gradient(160deg, #FFE4E6, #FDA4AF); }
 .track-card.t-ca { background: linear-gradient(160deg, #FEF3C7, #FBBF24); }
 .track-card.t-cb { background: linear-gradient(160deg, #FCE7F3, #F472B6); }
+
+/* Welcome / age */
+.welcome-card { border-color: #A5B4FC; }
+.age-prompt { margin-top: 18px; font-size: 1.15rem; }
+.age-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.age-btn {
+  border: 3px solid #DDD6FE;
+  background: white;
+  border-radius: 16px;
+  padding: 14px 8px;
+  font-weight: 900;
+  font-size: 1.25rem;
+  cursor: pointer;
+  min-height: 56px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+}
+.age-btn:hover { border-color: var(--lavender-dark); transform: translateY(-2px); }
+.age-btn.selected {
+  background: linear-gradient(135deg, var(--lavender-dark), #6366F1);
+  color: white;
+  border-color: #4F46E5;
+}
+.welcome-hint {
+  margin-top: 12px;
+  font-weight: 700;
+  color: #4338CA;
+  background: #EEF2FF;
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 999px;
+}
+.earlier-grid .track-card {
+  opacity: 0.85;
+  border: 3px dashed #CBD5E1;
+}
+.track-card.recommended-glow {
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.35), var(--shadow);
+}
+.path-node.muted { opacity: 0.45; }
+.path-node.start-here {
+  border-color: var(--lavender-dark);
+  background: #F5F3FF;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+}

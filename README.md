@@ -4,6 +4,26 @@ Kid-friendly adaptive coding tutor — progressive path from **Scratch Jr → Ca
 
 Built for Alexa (and friends) with big buttons, stars, badges, warm feedback, and per-language projects.
 
+
+## Age-based start
+
+On first visit, students enter **name + age**. Code Companion picks a starting track (no baby programs for older kids). Earlier tracks stay under **Earlier levels**.
+
+| Age band | Default start | Recommended path |
+|----------|---------------|------------------|
+| 5–7 | Scratch Jr | Scratch Jr → Hopscotch |
+| 8–9 | Scratch | Scratch → App Inventor |
+| 10–11 | **Roblox (Luau)** | Roblox → App Inventor optional |
+| 12–13 | Python | Python / Roblox → Unity optional |
+| 14+ | HTML & CSS | HTML/CSS → JavaScript → Full Stack (Roblox still open) |
+
+**Keep Learning** continues from the age-appropriate track (or in-progress lesson), not Scratch Jr by default.
+
+Age is saved in `localStorage` with the student name. Parent view shows age + recommended path.
+
+Live site: https://dorischiu2.github.io/code-companion/
+
+
 ## Open Code Companion
 
 ### Kid link (recommended)
