@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Companion 🌟</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="topbar">
+    <div class="logo">
+      <div class="logo-badge" aria-hidden="true">🚀</div>
+      <span>Code Companion</span>
+    </div>
+    <div class="top-actions">
+      <button class="btn btn-ghost" id="btnHome" type="button">🏠 Home</button>
+      <button class="btn btn-ghost" id="btnParent" type="button">👨‍👩‍👧 Parent</button>
+    </div>
+  </header>
+
+  <section id="view-home">
+    <div class="card hero">
+      <div class="hero-emoji" aria-hidden="true">👾</div>
+      <h1>Hi, <span id="helloName">Alexa</span>! 👋</h1>
+      <p>Your coding adventure path — from Scratch Jr all the way to Capstone!</p>
+      <div class="name-row">
+        <label for="studentName">Your name</label>
+        <input class="name-input" id="studentName" type="text" maxlength="24" value="Alexa" aria-label="Student name">
+      </div>
+      <div class="stars" id="homeStars" aria-label="Stars earned"></div>
+      <div class="progress-pill" id="homeProgress">⭐ 0 stars · keep going!</div>
+      <div class="badge-row" id="homeBadges"></div>
+      <div style="margin-top:20px">
+        <button class="btn btn-big btn-primary" id="btnContinue" type="button">▶️ Keep Learning</button>
+      </div>
+      <div style="margin-top:10px">
+        <button class="btn btn-big btn-mint" id="btnCapstone" type="button">🏆 Track Project</button>
+      </div>
+    </div>
+
+    <h2 class="section-title">🗺️ Your learning path</h2>
+    <div class="path-scroll">
+      <div class="learning-path" id="learningPath" role="navigation" aria-label="Learning path"></div>
+    </div>
+
+    <h2 class="section-title">🎮 All tracks</h2>
+    <div class="track-grid" id="trackGrid"></div>
+  </section>
+
+  <section id="view-track" class="hidden">
+    <div class="card">
+      <button class="btn btn-ghost" id="btnBackHome" type="button">← Back</button>
+      <h2 id="trackTitle" style="margin:14px 0 6px;font-size:1.6rem"></h2>
+      <p id="trackDesc" style="color:var(--ink-soft);margin-bottom:12px"></p>
+      <div class="bar"><span id="trackBar" style="width:0%"></span></div>
+      <div class="lesson-list" id="lessonList"></div>
+      <div id="trackCapWrap" style="margin-top:16px"></div>
+    </div>
+  </section>
+
+  <section id="view-lesson" class="hidden">
+    <div class="card">
+      <button class="btn btn-ghost" id="btnBackTrack" type="button">← Lessons</button>
+      <div style="margin-top:12px">
+        <span class="step-pill" id="stepPill">Step 1 of 5</span>
+        <div class="bar"><span id="lessonBar" style="width:0%"></span></div>
+      </div>
+      <div class="teach-box" id="teachBox">
+        <h2 id="stepTitle">Title</h2>
+        <div id="stepBody"></div>
+      </div>
+      <div id="questionArea"></div>
+      <div class="feedback" id="feedbackBox" role="status" aria-live="polite"></div>
+      <div id="skipBox" class="hidden"></div>
+      <div class="nav-row">
+        <button class="btn btn-sky" id="btnCheck" type="button">✅ Check Answer</button>
+        <button class="btn btn-mint hidden" id="btnNext" type="button">Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-trackcap" class="hidden">
+    <div class="card">
+      <button class="btn btn-ghost" id="btnTcBack" type="button">← Lessons</button>
+      <h2 id="tcTitle" style="margin:14px 0 8px;font-size:1.5rem">Track Project</h2>
+      <p id="tcBlurb" style="color:var(--ink-soft);margin-bottom:16px"></p>
+      <ul class="checklist" id="tcChecklist"></ul>
+      <div class="bar" style="margin-top:14px"><span id="tcBar" style="width:0%"></span></div>
+      <p id="tcPct" style="font-weight:800;margin:8px 0 16px">0% done</p>
+      <h3 style="margin-bottom:8px">📝 Tell me about your build</h3>
+      <textarea class="notes" id="tcNotes" placeholder="What did you make? What worked? What was tricky?"></textarea>
+      <div style="margin-top:12px">
+        <button class="btn btn-big btn-sun" id="btnTcFeedback" type="button">✨ Get Feedback</button>
+      </div>
+      <div class="feedback-report" id="tcReport"></div>
+    </div>
+  </section>
+
+  <section id="view-capstone" class="hidden">
+    <div class="card"><p>Loading project…</p></div>
+  </section>
+
+  <section id="view-parent" class="hidden">
+    <div class="card">
+      <button class="btn btn-ghost" id="btnParentBack" type="button">← Home</button>
+      <h2 style="margin:14px 0 8px;font-size:1.5rem">👨‍👩‍👧 Parent view</h2>
+      <p style="color:var(--ink-soft);margin-bottom:16px">Simple progress for <strong id="parentStudent">Alexa</strong></p>
+      <div class="parent-grid" id="parentStats"></div>
+      <div style="margin-top:18px">
+        <h3 style="margin-bottom:8px">Tracks</h3>
+        <div id="parentTracks"></div>
+      </div>
+      <div style="margin-top:18px">
+        <button class="btn btn-ghost" id="btnReset" type="button">↺ Reset this student’s progress</button>
+      </div>
+    </div>
+  </section>
+
+  <p class="footer tip">💾 Progress saves on this device · Full coding path for kids · Made for Alexa &amp; friends</p>
+</div>
+
+<script src="lessons-meta.js"></script>
+<script src="lessons-scratchjr.js"></script>
+<script src="lessons-hopscotch.js"></script>
+<script src="lessons-scratch.js"></script>
+<script src="lessons-appinventor.js"></script>
+<script src="lessons-roblox.js"></script>
+<script src="lessons-obby.js"></script>
+<script src="lessons-luau.js"></script>
+<script src="lessons-python.js"></script>
+<script src="lessons-unity.js"></script>
+<script src="lessons-htmlcss.js"></script>
+<script src="lessons-javascript.js"></script>
+<script src="lessons-fullstack.js"></script>
+<script src="lessons-capa.js"></script>
+<script src="lessons-capb.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
