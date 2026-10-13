@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Code Companion 🌟</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -142,6 +143,26 @@
     <div class="card"><p>Loading project…</p></div>
   </section>
 
+  <section id="view-play" class="hidden">
+    <div class="play-head">
+      <button class="btn btn-ghost" id="btnPlayBack" type="button">← Missions</button>
+      <div class="play-title"><span id="playEmoji">🧱</span> <b id="playTitle">Mission</b><div class="play-goal" id="playGoal"></div></div>
+      <div class="dots" id="playDots" aria-label="Mission steps"></div>
+      <button class="btn btn-mint hidden" id="btnPlayNext" type="button">Next mission →</button>
+    </div>
+    <div class="tutor-bar" id="tutorBar">
+      <div class="mascot" id="mascot" data-mood="talk" aria-hidden="true"><span class="m-face">🤖</span></div>
+      <div class="bubble" id="bubble" role="status" aria-live="polite"></div>
+      <div class="tutor-btns">
+        <button class="btn btn-sun" id="btnHint" type="button">💡 Hint</button>
+        <button class="btn btn-sky" id="btnShowMe" type="button">👀 Show me</button>
+        <button class="btn btn-ghost" id="btnSay" type="button" aria-label="Read aloud">🔊</button>
+        <button class="btn btn-ghost voice" id="btnVoice" type="button" aria-pressed="false" title="Auto read-aloud">🗣️ Auto</button>
+      </div>
+    </div>
+    <div class="play-mount" id="playMount"></div>
+  </section>
+
   <section id="view-parent" class="hidden">
     <div class="card">
       <button class="btn btn-ghost" id="btnParentBack" type="button">← Home</button>
@@ -180,6 +201,10 @@
 <script src="lessons-fullstack.js"></script>
 <script src="lessons-capa.js"></script>
 <script src="lessons-capb.js"></script>
+<script src="engine/luau.js"></script>
+<script src="engine/studio.js"></script>
+<script src="engine/tutor.js"></script>
+<script src="missions/roblox.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

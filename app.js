@@ -14,8 +14,12 @@ const LESSONS = Object.assign(
   typeof LESSONS_JAVASCRIPT !== "undefined" ? LESSONS_JAVASCRIPT : {},
   typeof LESSONS_FULLSTACK !== "undefined" ? LESSONS_FULLSTACK : {},
   typeof LESSONS_CAPA !== "undefined" ? LESSONS_CAPA : {},
-  typeof LESSONS_CAPB !== "undefined" ? LESSONS_CAPB : {}
+  typeof LESSONS_CAPB !== "undefined" ? LESSONS_CAPB : {},
+  typeof MISSIONS !== "undefined" ? MISSIONS : {}
 );
+if (typeof MISSION_TRACKS !== "undefined" && typeof TRACKS !== "undefined") {
+  TRACKS.forEach((t) => { if (MISSION_TRACKS[t.id]) t.lessons = MISSION_TRACKS[t.id].slice(); });
+}
 
 const DEFAULT_STATE = () => ({
   student: "Alexa",
@@ -187,7 +191,8 @@ let skipOffered = false;
 const $ = (id) => document.getElementById(id);
 
 function showView(id) {
-  ["welcome", "home", "track", "lesson", "capstone", "trackcap", "parent"].forEach((v) => {
+  if (id !== "play") teardownPlay();
+  ["welcome", "home", "track", "lesson", "capstone", "trackcap", "parent", "play"].forEach((v) => {
     const el = $("view-" + v);
     if (el) el.classList.toggle("hidden", v !== id);
   });
@@ -393,7 +398,7 @@ function openTrack(trackId) {
     b.innerHTML =
       '<div class="lesson-num">' + (isDone ? "✓" : String(i + 1)) + "</div>" +
       "<div><div class=\"lesson-title\">" + lesson.title + "</div>" +
-      '<div class="lesson-sub">' + lesson.steps.length + " steps · " +
+      '<div class="lesson-sub">' + (lesson.kind ? (lesson.emoji || "🎮") + " " + (lesson.goal || "Play mission") : lesson.steps.length + " steps") + " · " +
       (isDone ? "Done!" : locked ? "Finish the one above first" : "Tap to start") +
       "</div></div><div>" + (isDone ? "⭐" : "▶️") + "</div>";
     if (!locked) b.addEventListener("click", () => startLesson(lid));
@@ -418,6 +423,7 @@ function openTrack(trackId) {
 }
 
 function startLesson(lessonId) {
+  if (LESSONS[lessonId] && LESSONS[lessonId].kind) { startMission(lessonId); return; }
   currentLessonId = lessonId;
   stepIndex = 0;
   selectedChoice = null;
@@ -1251,3 +1257,72 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
+
+/* ===== Interactive missions (play view) ===== */
+const CC_ENGINES = window.CC_ENGINES = window.CC_ENGINES || {};
+CC_ENGINES.studio = function (mount, m) {
+  const st = new Studio(mount);
+  st.studentName = state.student;
+  st.load(Object.assign({ theme: m.theme || "roblox" }, m.setup));
+  return st;
+};
+let playEngine = null, playRunner = null;
+function teardownPlay() {
+  if (playRunner) { playRunner.destroy(); playRunner = null; }
+  if (playEngine) { try { playEngine.destroy(); } catch (e) { console.error(e); } playEngine = null; }
+  const mt = $("playMount"); if (mt) mt.innerHTML = "";
+  document.querySelectorAll(".tb-win,.tb-confetti").forEach((e) => e.remove());
+}
+function nextMissionId(id) {
+  const m = LESSONS[id]; const t = TRACKS.find((x) => x.id === m.track); if (!t) return null;
+  const i = t.lessons.indexOf(id); return i >= 0 && i < t.lessons.length - 1 ? t.lessons[i + 1] : null;
+}
+function startMission(id) {
+  const m = LESSONS[id];
+  showView("play");
+  teardownPlay();
+  currentLessonId = id; currentTrackId = m.track;
+  state.lastLesson = id; state.lastTrack = m.track; state.currentMission = m.title; saveState(state);
+  $("playTitle").textContent = m.title; $("playEmoji").textContent = m.emoji || "🎮"; $("playGoal").textContent = m.goal || "";
+  const nx = nextMissionId(id);
+  $("btnPlayNext").classList.toggle("hidden", !(nx && state.completed[id]));
+  $("btnPlayNext").onclick = () => nx ? startMission(nx) : openTrack(m.track);
+  const view = $("view-play"); view.dataset.kind = m.kind;
+  const mount = $("playMount");
+  const make = CC_ENGINES[m.kind];
+  if (!make) { mount.innerHTML = "<p>This mission type is coming soon.</p>"; return; }
+  playEngine = make(mount, m);
+  playRunner = new Tutor.Mission({
+    mission: m, engine: playEngine, root: view,
+    ui: { bubble: $("bubble"), mascot: $("mascot"), dots: $("playDots"), hint: $("btnHint"), show: $("btnShowMe"), voice: $("btnVoice"), say: $("btnSay") },
+    onStep: (info) => { state.missionStats = state.missionStats || {}; const k = id; const ms = state.missionStats[k] || { steps: 0, secs: 0, hints: 0, fast: 0 }; ms.steps++; ms.secs += Math.round(info.secs); ms.hints += info.hints; if (info.fast) ms.fast++; state.missionStats[k] = ms; saveState(state); },
+    onComplete: (r) => ccMissionComplete(id, r),
+    onNext: () => { const n = nextMissionId(id); if (n) startMission(n); else openTrack(m.track); }
+  });
+}
+function ccMissionComplete(id, r) {
+  const m = LESSONS[id]; const wasNew = !state.completed[id];
+  const before = levelFromXp(state.xp || 0).title;
+  let xp = 0, badge = null;
+  state.completed[id] = true;
+  if (wasNew) {
+    state.stars = (state.stars || 0) + 1;
+    xp = m.xpReward || 30;
+    if (r && r.hints === 0) xp += 10;
+    addXp(xp, "mission");
+    if (m.badge) { state.conceptBadges = state.conceptBadges || []; if (state.conceptBadges.indexOf(m.badge) === -1) { state.conceptBadges.push(m.badge); badge = m.badge; } }
+    maybeBadge();
+  }
+  state.streakCorrect = (state.streakCorrect || 0) + 1;
+  state.bestStreak = Math.max(state.bestStreak || 0, state.streakCorrect);
+  saveState(state); updateHome();
+  const after = levelFromXp(state.xp || 0);
+  const nx = nextMissionId(id); $("btnPlayNext").classList.toggle("hidden", !nx);
+  return { xp, badge, levelUp: after.title !== before ? after.emoji + " " + after.title : null };
+}
+window.ccMissionComplete = ccMissionComplete;
+document.addEventListener("DOMContentLoaded", () => {
+  const b = $("btnPlayBack"); if (b) b.addEventListener("click", () => { const m = LESSONS[currentLessonId]; if (m) openTrack(m.track); else showView("home"); });
+});
+window.ccDebug = { engine: () => playEngine, runner: () => playRunner };
