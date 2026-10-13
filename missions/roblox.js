@@ -215,7 +215,7 @@
     track: "roblox", title: "Checkpoint Save", emoji: "🚩", kind: "studio", xpReward: 45, badge: "Checkpoint Champ",
     goal: "Add a checkpoint and fix a too-hard jump",
     setup: {
-      parts: [SPAWN(), ...PATH([[9.5, 3, 3], [14.5, 4, 3], [19.5, 5, 3]]), { name: "LastStep", x: 26.5, y: 5, w: 3, h: 1, color: "#da8541" }, FINISH({ x: 30, y: 6, w: 4 })],
+      parts: [SPAWN(), ...PATH([[9.5, 3, 3], [14.5, 4, 3], [19.5, 5, 3]]), { name: "LastStep", x: 27, y: 5, w: 3, h: 1, color: "#da8541" }, FINISH({ x: 30.5, y: 6, w: 3 })],
       tools: ["checkpoint", "move", "delete"]
     },
     steps: [
