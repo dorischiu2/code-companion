@@ -112,3 +112,31 @@ Demo archive: `/workspace/Code-Companion-demo.tar.gz`
 2. Name = **Alexa**
 3. Tap **Keep Learning** or a path node
 4. Earn ⭐ · try **Track Project** when ready
+
+## 🎮 Interactive guided missions (v4)
+
+Every lesson is now a **play mission**, not a quiz. **Byte 🤖** (the tutor) gives one short instruction at a time in a speech bubble, watches what the student actually does, and reacts:
+
+- **💡 Hint** / **👀 Show me**: hints appear on their own after 20 s and 45 s. Show me plays a ghost demo or shows a glowing target zone.
+- **🔊 / 🗣️ Auto**: read-aloud using the browser's Web Speech.
+- **Adaptive**:
+  - finishing two steps fast with no hints brings up *"You're flying! 🚀"* with an offer to skip ahead;
+  - repeated mistakes bring specific feedback ("that jump is 5.2 studs, your avatar jumps about 4"), UI highlights and a pulsing Show me.
+- **On completion**: confetti, XP (+10 for no hints) and a badge. Time and hints per step are saved for the parent view.
+
+| Track | Engine | What's interactive |
+|---|---|---|
+| Roblox (Luau) | `engine/studio.js` + `engine/luau.js` | **Mini-Studio**: insert, drag, Scale and Rotate parts, plus Explorer and Properties (Color, Anchored, CanCollide, Transparency, Size). **▶ Play** runs an avatar with gravity: unanchored parts fall and big gaps kill you. Scripts run in a **safe Luau interpreter** with Touched, wait, loops, leaderstats, Color3 and Humanoid, and errors are explained kindly. A blocks palette writes the Luau for you. 10 missions plus a capstone that **reviews your real build**. |
+| Scratch / Scratch Jr / Hopscotch | `engine/stage.js` | Tap-to-snap blocks (move, turn, say, repeat, events, pen) that animate on a stage. Missions check the sprite's real path, for example whether a closed square was drawn. |
+| App Inventor | `engine/phone.js` | Designer (Button, Label, TextBox) plus event blocks on a live phone mock-up. |
+| Python | `engine/pyrun.js` | Real Python through **Pyodide**, loaded from a CDN on first run, with friendly tracebacks. Missions are checked against stdout and variables. |
+| HTML/CSS · JS · Full Stack | `engine/web.js` | Live editor and preview. Checks inspect the real preview DOM, computed CSS and clicks. Full Stack uses a mock `/api` for fetch GET and POST. |
+| Unity | studio (Unity theme) | Hierarchy, Inspector, Static or Rigidbody gravity. |
+| Capstone A / B | web / studio | Free build followed by a Byte review. |
+
+### Tests
+```bash
+python3 -m http.server 8765 &
+CHROME=/usr/bin/google-chrome PW_PATH=<path to playwright> EXTRA=$PWD/tests/all.mjs node tests/smoke.mjs
+```
+`tests/smoke.mjs` runs onboarding, the first Roblox mission (place a part, press Play, win), a Luau colour change, a friendly error and a console-error check. `tests/roblox-all.mjs` and `tests/tracks.mjs` solve every mission automatically.

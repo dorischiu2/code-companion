@@ -53,9 +53,9 @@ await page.evaluate(() => { const e = ccDebug.engine(); e.stop("t"); e.ta.value 
 await page.click('[data-act="play"]'); await page.waitForTimeout(400);
 const out = await page.textContent(".st-output");
 ok("friendly script error", /no part named "Platfrom"/.test(out), out.slice(-90));
+if (process.env.EXTRA) { const mod = await import(process.env.EXTRA); await mod.default(page, ok); }
 const ers = errors.filter((e) => !/favicon/.test(e));
 ok("no console errors", ers.length === 0, ers.join(" | "));
-if (process.env.EXTRA) { const mod = await import(process.env.EXTRA); await mod.default(page, ok); }
 await browser.close();
 const fails = results.filter((r) => !r[1]).length;
 console.log(fails ? fails + " FAILED" : "ALL PASSED"); process.exit(fails ? 1 : 0);

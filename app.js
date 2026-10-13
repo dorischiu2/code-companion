@@ -1267,6 +1267,10 @@ CC_ENGINES.studio = function (mount, m) {
   st.load(Object.assign({ theme: m.theme || "roblox" }, m.setup));
   return st;
 };
+CC_ENGINES.stage = function (mount, m) { const e = new Stage(mount); e.load(m.setup); return e; };
+CC_ENGINES.phone = function (mount, m) { const e = new Phone(mount); e.load(m.setup); return e; };
+CC_ENGINES.python = function (mount, m) { const e = new PyRun(mount); e.load(m.setup); return e; };
+CC_ENGINES.web = function (mount, m) { const e = new WebEditor(mount); e.load(m.setup); return e; };
 let playEngine = null, playRunner = null;
 function teardownPlay() {
   if (playRunner) { playRunner.destroy(); playRunner = null; }
