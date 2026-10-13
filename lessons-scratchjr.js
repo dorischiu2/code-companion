@@ -3,51 +3,38 @@ const LESSONS_SCRATCHJR = {
     "id": "sj1",
     "track": "scratchjr",
     "title": "Meet Scratch Jr",
+    "badge": "🐤 Block Buddy",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "What is Scratch Jr?",
-        "teach": "Scratch Jr is a coding app for younger kids. You snap colorful blocks together to make characters move and tell stories — no typing needed!",
-        "type": "mcq",
-        "prompt": "Scratch Jr is mostly about…",
-        "choices": [
-          "Snapping blocks to make characters move",
-          "Writing long essays",
-          "Fixing Wi-Fi routers",
-          "Baking cookies"
-        ],
-        "answer": 0,
-        "why": "You build programs by dragging blocks.",
-        "hint": "Blocks → actions."
+        "type": "mission",
+        "title": "🐤 Mission: Meet Scratch Jr — your story studio!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Meet Scratch Jr</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Characters",
-        "teach": "The friends on screen are characters (like sprites). You can add more from the character library!",
-        "type": "mcq",
-        "prompt": "A character in Scratch Jr is…",
-        "choices": [
-          "Someone you can move with blocks",
-          "A password",
-          "A phone charger",
-          "A type of virus"
+        "type": "tryit",
+        "title": "🛠️ Try this in Scratch Jr",
+        "teach": "Hands-on beats guessing. Do these in <strong>Scratch Jr</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Open Scratch Jr",
+          "Start a new project",
+          "Look at the block palette"
         ],
-        "answer": 0,
-        "why": "Characters are the actors in your story.",
-        "hint": "Like actors on a stage."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Green flag idea",
-        "teach": "Many projects start when you tap the green flag (or a start block). That says “Go!”",
-        "type": "mcq",
-        "prompt": "Tapping the green flag usually means…",
-        "choices": [
-          "Start the project",
-          "Delete the app",
-          "Turn off the tablet",
-          "Print a book"
-        ],
-        "answer": 0,
-        "why": "Green flag = start.",
-        "hint": "Same idea as Scratch later!"
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Blocks are puzzle pieces of code. Snap them to make characters act.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "sj1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Name it",
@@ -68,36 +55,39 @@ const LESSONS_SCRATCHJR = {
     "id": "sj2",
     "track": "scratchjr",
     "title": "Move & Pages",
+    "badge": "➡️ Mover",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Move blocks",
-        "teach": "Use movement blocks (arrows) to make a character walk left, right, up, or down.",
-        "type": "mcq",
-        "prompt": "Which blocks make a character walk?",
-        "choices": [
-          "Move / arrow blocks",
-          "Only the trash can",
-          "The camera shutter",
-          "Wi-Fi settings"
-        ],
-        "answer": 0,
-        "why": "Arrow/move blocks change position.",
-        "hint": "Think: walk this way →"
+        "type": "mission",
+        "title": "🚀 Mission: Make someone MOVE across a page!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Move & Pages</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Pages = scenes",
-        "teach": "Pages are like scenes in a storybook. Add a new page for the next part of your adventure!",
-        "type": "mcq",
-        "prompt": "A new page in Scratch Jr is like…",
-        "choices": [
-          "A new scene in your story",
-          "A broken screen",
-          "A lunch menu only",
-          "A password reset"
+        "type": "tryit",
+        "title": "🛠️ Try this in Scratch Jr",
+        "teach": "Hands-on beats guessing. Do these in <strong>Scratch Jr</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Add a character",
+          "Add a move/arrow block",
+          "Add a second page",
+          "Tap the green flag / play"
         ],
-        "answer": 0,
-        "why": "Pages let stories have many scenes.",
-        "hint": "Scene 1, scene 2…"
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Pages are scenes. Move blocks change where a character goes.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "sj2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Build a tiny story",
@@ -118,21 +108,6 @@ const LESSONS_SCRATCHJR = {
         ],
         "why": "Character → move → next page → play.",
         "hint": "Start with a character!"
-      },
-      {
-        "title": "Playtest",
-        "teach": "Always tap play (green flag) to see if your story works. If not, change the blocks!",
-        "type": "mcq",
-        "prompt": "Best habit after adding blocks?",
-        "choices": [
-          "Play-test your project",
-          "Throw away the tablet",
-          "Never open it again",
-          "Delete all pages"
-        ],
-        "answer": 0,
-        "why": "Play-testing shows what to fix.",
-        "hint": "Try it yourself!"
       }
     ]
   },
@@ -140,51 +115,38 @@ const LESSONS_SCRATCHJR = {
     "id": "sj3",
     "track": "scratchjr",
     "title": "Start Blocks & Showing Off",
+    "badge": "🎬 Story Starter",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Start on tap",
-        "teach": "Some blocks start when the character is tapped. That makes interactive stories!",
-        "type": "mcq",
-        "prompt": "A “start on tap” style block helps you…",
-        "choices": [
-          "React when someone taps the character",
-          "Cook dinner",
-          "Charge the battery",
-          "Erase Wi-Fi"
-        ],
-        "answer": 0,
-        "why": "Tap triggers make projects interactive.",
-        "hint": "Touch → action."
+        "type": "mission",
+        "title": "👆 Mission: Make a character react when tapped!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Start Blocks & Showing Off</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Speed",
-        "teach": "You can change how fast a character moves with speed-related options — slower is nicer for stories.",
-        "type": "mcq",
-        "prompt": "If a character zooms too fast, you should…",
-        "choices": [
-          "Slow it down / adjust movement",
-          "Delete Scratch Jr forever",
-          "Close your eyes",
-          "Add 100 pages at once"
+        "type": "tryit",
+        "title": "🛠️ Try this in Scratch Jr",
+        "teach": "Hands-on beats guessing. Do these in <strong>Scratch Jr</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Add a start-on-tap style block",
+          "Slow a character down if it’s too fast",
+          "Show your 2-page story to someone"
         ],
-        "answer": 0,
-        "why": "Adjust speed so the story is readable.",
-        "hint": "Stories need time to breathe."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Share the joy",
-        "teach": "Show a parent or friend your 2-page story. Teaching someone what your blocks do makes you a better coder!",
-        "type": "mcq",
-        "prompt": "A great finish for Scratch Jr practice is…",
-        "choices": [
-          "Show someone your story",
-          "Hide the tablet forever",
-          "Never use green flag",
-          "Remove all characters"
-        ],
-        "answer": 0,
-        "why": "Sharing builds confidence.",
-        "hint": "Demo time!"
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Start blocks decide WHEN code runs — flag, tap, or other triggers.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "sj3",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Remember",

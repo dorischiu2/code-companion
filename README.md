@@ -5,6 +5,21 @@ Kid-friendly adaptive coding tutor — progressive path from **Scratch Jr → Ca
 Built for Alexa (and friends) with big buttons, stars, badges, warm feedback, and per-language projects.
 
 
+
+## Concept-first missions (not quiz stacks)
+
+Each lesson is a **mission**:
+1. **Story / quest** — why this concept matters  
+2. **Try it** — checklist in the real tool (Roblox Studio, Scratch, Python…)  
+3. **Concept card** — one clear idea  
+4. **One check** — fill / order / scenario (not four MCQs in a row)
+
+### Gamification
+- **XP + level titles** (Seed Coder → Path Legend)
+- **Streak flame** for correct checks
+- **Concept badges** (Part Pro, Loop Legend, …)
+- Mission map on Home · Parent view shows XP, streak, badges, current mission
+
 ## Age-based start
 
 On first visit, students enter **name + age**. Code Companion picks a starting track (no baby programs for older kids). Earlier tracks stay under **Earlier levels**.

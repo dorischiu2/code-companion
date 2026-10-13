@@ -3,51 +3,38 @@ const LESSONS_JAVASCRIPT = {
     "id": "js1",
     "track": "javascript",
     "title": "What is JavaScript?",
+    "badge": "💛 JS Spark",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "JS role",
-        "teach": "JavaScript makes web pages interactive in the browser — clicks, messages, animations.",
-        "type": "mcq",
-        "prompt": "JavaScript’s common home is…",
-        "choices": [
-          "The web browser",
-          "Only Roblox Studio Workspace",
-          "Only Unity Hub",
-          "Only Scratch Jr tablets"
-        ],
-        "answer": 0,
-        "why": "Browsers run JS.",
-        "hint": "Pages that react."
+        "type": "mission",
+        "title": "💛 Mission: Meet JavaScript!",
+        "teach": "Gear up, coder! Today’s quest: <strong>What is JavaScript?</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "script tag",
-        "teach": "You can put JS in <script>…</script> or a .js file linked from HTML.",
-        "type": "mcq",
-        "prompt": "A <script> tag holds…",
-        "choices": [
-          "JavaScript code",
-          "CSS only forever",
-          "Python indentation",
-          "Luau Parts"
+        "type": "tryit",
+        "title": "🛠️ Try this in JavaScript",
+        "teach": "Hands-on beats guessing. Do these in <strong>JavaScript</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Open DevTools Console (if you can)",
+          "Think about a <script> tag",
+          "Imagine console.log(\"hi\")"
         ],
-        "answer": 0,
-        "why": "script = JS container.",
-        "hint": "Inside HTML or linked."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "console.log",
-        "teach": "console.log(\"hi\") prints to the browser console (DevTools) — like Python print for debugging.",
-        "type": "mcq",
-        "prompt": "console.log is mainly for…",
-        "choices": [
-          "Debugging / showing messages in the console",
-          "Anchoring Parts",
-          "Painting Unity skies",
-          "Snapping Hopscotch rules"
-        ],
-        "answer": 0,
-        "why": "Console helps you see values.",
-        "hint": "Open DevTools → Console."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "JS makes pages interactive in the browser.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "js1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Name",
@@ -69,51 +56,38 @@ const LESSONS_JAVASCRIPT = {
     "id": "js2",
     "track": "javascript",
     "title": "Variables & Functions",
+    "badge": "🧩 Function Fan",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "let/const",
-        "teach": "let score = 0; stores a value. const PI = 3.14 stays fixed.",
-        "type": "mcq",
-        "prompt": "let score = 0 creates a…",
-        "choices": [
-          "Variable",
-          "Scene",
-          "Sprite",
-          "Part"
-        ],
-        "answer": 0,
-        "why": "Variables store values.",
-        "hint": "Same idea as Python."
+        "type": "mission",
+        "title": "🧩 Mission: Bundle steps in a function!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Variables & Functions</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Functions",
-        "teach": "function greet() { … } packages steps you can call later with greet().",
-        "type": "mcq",
-        "prompt": "A function is…",
-        "choices": [
-          "A reusable bundle of steps",
-          "A CSS color only",
-          "A Unity cube mesh",
-          "A green flag costume"
+        "type": "tryit",
+        "title": "🛠️ Try this in JavaScript",
+        "teach": "Hands-on beats guessing. Do these in <strong>JavaScript</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Write let score = 0",
+          "Write function greet() { … }",
+          "Call greet()"
         ],
-        "answer": 0,
-        "why": "Functions organize behavior.",
-        "hint": "Name → call."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Call it",
-        "teach": "Defining a function doesn’t run it until you call it.",
-        "type": "mcq",
-        "prompt": "After function wave(){…}, you run it by…",
-        "choices": [
-          "Writing wave()",
-          "Deleting HTML",
-          "Anchoring it",
-          "Buying a new router"
-        ],
-        "answer": 0,
-        "why": "Call with parentheses.",
-        "hint": "wave()."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Variables store. Functions package reusable steps.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "js2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Keyword",
@@ -134,36 +108,38 @@ const LESSONS_JAVASCRIPT = {
     "id": "js3",
     "track": "javascript",
     "title": "Talk to the Page",
+    "badge": "🖱️ Click Captain",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "querySelector",
-        "teach": "document.querySelector(\"#msg\") finds an element on the page.",
-        "type": "mcq",
-        "prompt": "document.querySelector finds…",
-        "choices": [
-          "A page element",
-          "A Roblox Humanoid only",
-          "A Unity Scene asset only",
-          "A Scratch backpack"
-        ],
-        "answer": 0,
-        "why": "DOM selection grabs elements.",
-        "hint": "CSS-style selectors."
+        "type": "mission",
+        "title": "🖱️ Mission: Change the page on click!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Talk to the Page</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "textContent",
-        "teach": "el.textContent = \"You win!\" changes the text you see.",
-        "type": "mcq",
-        "prompt": "textContent changes…",
-        "choices": [
-          "Visible text",
-          "Your OS password",
-          "Python’s indent rules",
-          "Hopscotch object IDs only"
+        "type": "tryit",
+        "title": "🛠️ Try this in JavaScript",
+        "teach": "Hands-on beats guessing. Do these in <strong>JavaScript</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Add a button in HTML",
+          "Select it with querySelector",
+          "Plan addEventListener(\"click\", …)"
         ],
-        "answer": 0,
-        "why": "Update text in the DOM.",
-        "hint": "Hello → You win!"
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "JS finds page elements and listens for events like click.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "js3",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Button plan",
@@ -184,21 +160,6 @@ const LESSONS_JAVASCRIPT = {
         ],
         "why": "HTML → select → listen → change.",
         "hint": "Need the button first."
-      },
-      {
-        "title": "addEventListener",
-        "teach": "button.addEventListener(\"click\", handler) runs code on click — like Touched/When/Click events!",
-        "type": "mcq",
-        "prompt": "addEventListener(\"click\") is similar energy to…",
-        "choices": [
-          "Scratch/App Inventor click events",
-          "Only CSS margins",
-          "Only Unity lighting probes",
-          "Only Excel charts"
-        ],
-        "answer": 0,
-        "why": "Events everywhere.",
-        "hint": "Click → function."
       }
     ]
   },
@@ -206,51 +167,38 @@ const LESSONS_JAVASCRIPT = {
     "id": "js4",
     "track": "javascript",
     "title": "Mini Interactive Page",
+    "badge": "🏆 Interact Hero",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "alert",
-        "teach": "alert(\"Hi!\") pops a message — fine for learning, a bit annoying in real apps.",
-        "type": "mcq",
-        "prompt": "alert shows…",
-        "choices": [
-          "A popup message",
-          "A Roblox Part",
-          "A Unity Terrain tile",
-          "A Scratch sound automatically"
-        ],
-        "answer": 0,
-        "why": "alert = popup.",
-        "hint": "Use sparingly."
+        "type": "mission",
+        "title": "🏆 Mission: One interactive win!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Mini Interactive Page</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "if in JS",
-        "teach": "if (score >= 10) { … } works like Python if — decisions!",
-        "type": "mcq",
-        "prompt": "if in JS is for…",
-        "choices": [
-          "Decisions",
-          "Only styling fonts",
-          "Only meshes",
-          "Only Designer components"
+        "type": "tryit",
+        "title": "🛠️ Try this in JavaScript",
+        "teach": "Hands-on beats guessing. Do these in <strong>JavaScript</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Button changes text OR color",
+          "Test in the browser",
+          "Celebrate!"
         ],
-        "answer": 0,
-        "why": "Conditions branch code.",
-        "hint": "True → run."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Project idea",
-        "teach": "Button says “Click me” → JS changes a paragraph to “You did it!” — perfect JS capstone starter.",
-        "type": "mcq",
-        "prompt": "A great first JS project is…",
-        "choices": [
-          "Click → change something on the page",
-          "Rewrite the browser engine",
-          "Delete all HTML tags",
-          "Compile Unity from JS only"
-        ],
-        "answer": 0,
-        "why": "Tiny interactive wins.",
-        "hint": "One button is enough."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Tiny interactive projects teach the whole loop.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "js4",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Event name",

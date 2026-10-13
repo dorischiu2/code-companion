@@ -3,51 +3,38 @@ const LESSONS_FULLSTACK = {
     "id": "fs1",
     "track": "fullstack",
     "title": "Front & Back",
+    "badge": "🧩 Stack Scout",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Frontend",
-        "teach": "Frontend is what users see: HTML/CSS/JS in the browser (or a game UI).",
-        "type": "mcq",
-        "prompt": "Frontend is…",
-        "choices": [
-          "The part users see and click",
-          "Only the secret database vault",
-          "Only the Wi-Fi modem firmware",
-          "Only the power cable"
-        ],
-        "answer": 0,
-        "why": "Front = user-facing.",
-        "hint": "Buttons & pages."
+        "type": "mission",
+        "title": "🧩 Mission: Split front vs back!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Front & Back</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Backend",
-        "teach": "Backend is the server side: saves scores, checks logins, talks to databases.",
-        "type": "mcq",
-        "prompt": "Backend often…",
-        "choices": [
-          "Stores data & makes decisions on a server",
-          "Paints CSS shadows only",
-          "Replaces the GPU fan",
-          "Is only Scratch Jr pages"
+        "type": "tryit",
+        "title": "🛠️ Try this in Full Stack",
+        "teach": "Hands-on beats guessing. Do these in <strong>Full Stack</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Name one thing users see (frontend)",
+          "Name one thing a server might store (backend)",
+          "Say what an API does in one sentence"
         ],
-        "answer": 0,
-        "why": "Back = server logic/data.",
-        "hint": "Behind the scenes."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "API",
-        "teach": "An API is how front and back talk — like asking “save my score” and getting “OK”.",
-        "type": "mcq",
-        "prompt": "An API is…",
-        "choices": [
-          "A way for programs to talk",
-          "A type of pizza",
-          "A Unity skybox",
-          "A Hopscotch costume"
-        ],
-        "answer": 0,
-        "why": "API = messenger rules.",
-        "hint": "Request → response."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Frontend = what you see. Backend = server/data. API connects them.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "fs1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Half",
@@ -69,7 +56,39 @@ const LESSONS_FULLSTACK = {
     "id": "fs2",
     "track": "fullstack",
     "title": "Tiny App Design",
+    "badge": "🗺️ App Architect",
+    "xpReward": 25,
     "steps": [
+      {
+        "type": "mission",
+        "title": "🗺️ Mission: Design a tiny app!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Tiny App Design</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
+      },
+      {
+        "type": "tryit",
+        "title": "🛠️ Try this in Full Stack",
+        "teach": "Hands-on beats guessing. Do these in <strong>Full Stack</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Sketch one screen",
+          "Decide what to save",
+          "Note: no secrets in public frontend code"
+        ],
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Full-stack thinking plans UI + data + safety together.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "fs2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
+      },
       {
         "title": "Design a score app",
         "teach": "",
@@ -89,51 +108,6 @@ const LESSONS_FULLSTACK = {
         ],
         "why": "UI → data → API → safety.",
         "hint": "Start with the screen."
-      },
-      {
-        "title": "Secrets",
-        "teach": "Passwords and private keys must NOT live in public frontend code.",
-        "type": "mcq",
-        "prompt": "Where should secret keys NOT go?",
-        "choices": [
-          "Public frontend JS",
-          "A locked server vault (better place)",
-          "A parent-managed password manager",
-          "An offline paper note in a safe"
-        ],
-        "answer": 0,
-        "why": "Frontend is visible to users.",
-        "hint": "Never ship secrets in JS."
-      },
-      {
-        "title": "Full stack kid meaning",
-        "teach": "You understand both sides enough to plan a small app end-to-end.",
-        "type": "mcq",
-        "prompt": "Full stack thinking means…",
-        "choices": [
-          "Planning front + back together",
-          "Only drawing CSS gradients",
-          "Only moving Roblox Parts",
-          "Only tapping Hopscotch"
-        ],
-        "answer": 0,
-        "why": "Both halves matter.",
-        "hint": "See the whole path."
-      },
-      {
-        "title": "Next",
-        "teach": "Capstone A: pick one track and ship a real mini project!",
-        "type": "mcq",
-        "prompt": "Best Capstone A move?",
-        "choices": [
-          "Finish one small project and share it",
-          "Start 20 unfinished projects",
-          "Delete all your code",
-          "Skip testing forever"
-        ],
-        "answer": 0,
-        "why": "Ship small.",
-        "hint": "Done > perfect."
       }
     ]
   }

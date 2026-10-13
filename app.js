@@ -22,7 +22,11 @@ const DEFAULT_STATE = () => ({
   age: null,
   completed: {},
   stars: 0,
+  xp: 0,
+  level: 1,
   badges: [],
+  conceptBadges: [],
+  bestStreak: 0,
   lastLesson: null,
   lastTrack: null,
   lastActivity: null,
@@ -30,8 +34,37 @@ const DEFAULT_STATE = () => ({
   wrongStreak: {},
   trackCapChecks: {},
   trackCapNotes: {},
-  pathIndex: 0
+  pathIndex: 0,
+  currentMission: null
 });
+
+const LEVEL_TITLES = [
+  { min: 0, title: "Seed Coder", emoji: "🌱" },
+  { min: 50, title: "Spark Builder", emoji: "✨" },
+  { min: 125, title: "Block Adventurer", emoji: "🧱" },
+  { min: 250, title: "Loop Explorer", emoji: "🔁" },
+  { min: 400, title: "Script Ranger", emoji: "📜" },
+  { min: 600, title: "Game Designer", emoji: "🎮" },
+  { min: 850, title: "Stack Captain", emoji: "🧩" },
+  { min: 1200, title: "Path Legend", emoji: "🏆" }
+];
+
+function levelFromXp(xp) {
+  let cur = LEVEL_TITLES[0];
+  for (let i = 0; i < LEVEL_TITLES.length; i++) {
+    if ((xp || 0) >= LEVEL_TITLES[i].min) cur = LEVEL_TITLES[i];
+  }
+  const idx = LEVEL_TITLES.indexOf(cur);
+  const next = LEVEL_TITLES[idx + 1];
+  return { title: cur.title, emoji: cur.emoji, min: cur.min, nextAt: next ? next.min : null, levelNum: idx + 1 };
+}
+
+function addXp(amount, reason) {
+  state.xp = (state.xp || 0) + amount;
+  const info = levelFromXp(state.xp);
+  state.level = info.levelNum;
+  return info;
+}
 
 const LAST_STUDENT_KEY = "codeCompanion_lastStudent_v3";
 
@@ -218,11 +251,27 @@ function updateHome() {
   const done = completedCount();
   const total = totalLessons();
   const pct = Math.round((done / Math.max(total, 1)) * 100);
-  $("homeProgress").textContent = "⭐ " + (state.stars || 0) + " stars · " + done + "/" + total + " lessons (" + pct + "%)";
+  const lv = levelFromXp(state.xp || 0);
+  const missionTrack = state.lastTrack || ageProfile().startTrack;
+  const mt = TRACKS.find((t) => t.id === missionTrack);
+  const missionLesson = state.lastLesson && LESSONS[state.lastLesson] ? LESSONS[state.lastLesson].title : (mt ? mt.name + " adventure" : "Your next mission");
+  if ($("homeXp")) {
+    $("homeXp").textContent = "⚡ " + (state.xp || 0) + " XP · " + lv.emoji + " " + lv.title + " (Lv " + lv.levelNum + ")";
+  }
+  if ($("homeStreak")) {
+    const st = state.streakCorrect || 0;
+    $("homeStreak").textContent = st > 0 ? ("🔥 Streak x" + st) : "🔥 Streak ready";
+    $("homeStreak").classList.toggle("streak-hot", st >= 2);
+  }
+  if ($("homeMission")) {
+    $("homeMission").textContent = "🗺️ Current mission: " + missionLesson;
+  }
+  $("homeProgress").textContent = "⭐ " + (state.stars || 0) + " stars · " + done + "/" + total + " missions (" + pct + "%)";
   renderStars($("homeStars"), state.stars || 0);
   const badges = $("homeBadges");
   badges.innerHTML = "";
-  const list = state.badges && state.badges.length ? state.badges : ["🌱 Starter"];
+  const concept = state.conceptBadges || [];
+  const list = concept.length ? concept.slice(-8) : (state.badges && state.badges.length ? state.badges : ["🌱 Starter"]);
   list.forEach((b) => {
     const span = document.createElement("span");
     span.className = "badge";
@@ -376,9 +425,11 @@ function startLesson(lessonId) {
   hardMode = (state.streakCorrect || 0) >= 2;
   skipOffered = false;
   state.lastLesson = lessonId;
+  state.currentMission = LESSONS[lessonId].title;
   saveState(state);
   $("btnNext").textContent = "Next →";
   $("btnNext").onclick = nextStep;
+  $("btnCheck").onclick = checkAnswer;
   const skipBox = $("skipBox");
   if (skipBox) {
     skipBox.classList.add("hidden");
@@ -396,11 +447,22 @@ function renderStep() {
   const lesson = LESSONS[currentLessonId];
   const step = lesson.steps[stepIndex];
   const total = lesson.steps.length;
-  $("stepPill").textContent = "Step " + (stepIndex + 1) + " of " + total + " · " + lesson.title;
+  const typeLabel = ({
+    mission: "Mission",
+    tryit: "Try it",
+    concept: "Concept",
+    mcq: "Check",
+    fill: "Check",
+    order: "Check",
+    match: "Check",
+    scenario: "Check",
+    done: "Done"
+  })[step.type] || "Step";
+  $("stepPill").textContent = typeLabel + " · " + (stepIndex + 1) + "/" + total + " · " + lesson.title;
   $("lessonBar").style.width = (100 * stepIndex) / total + "%";
   $("stepTitle").textContent = step.title;
-  let teach = step.teach;
-  if (hardMode && step.type === "mcq") {
+  let teach = step.teach || "";
+  if (hardMode && (step.type === "mcq" || step.type === "scenario") ) {
     teach += " <em>(⭐ Challenge mode — answers may be shuffled!)</em>";
   }
   $("stepBody").innerHTML = teach;
@@ -415,14 +477,97 @@ function renderStep() {
   $("btnCheck").disabled = false;
   $("btnNext").classList.add("hidden");
 
+  // Mission / concept: continue without a hard quiz
+  if (step.type === "mission" || step.type === "concept") {
+    $("btnCheck").textContent = step.type === "mission" ? "🚀 Let’s go!" : "💡 Got it — next";
+    $("btnCheck").onclick = function () {
+      answeredCorrect = true;
+      showFeedback("good", step.type === "mission"
+        ? "Awesome — mission accepted! Time to try it for real."
+        : "Concept unlocked in your brain 🧠✨");
+      $("btnCheck").classList.add("hidden");
+      $("btnNext").classList.remove("hidden");
+    };
+    if (step.prompt) {
+      const prompt = document.createElement("p");
+      prompt.className = "step-prompt";
+      prompt.textContent = step.prompt;
+      q.appendChild(prompt);
+    }
+    return;
+  }
+
+  // Try-it checklist
+  if (step.type === "tryit") {
+    $("btnCheck").textContent = "✅ I tried it!";
+    const prompt = document.createElement("p");
+    prompt.className = "step-prompt";
+    prompt.textContent = step.prompt || "Check boxes as you try things:";
+    q.appendChild(prompt);
+    const ul = document.createElement("ul");
+    ul.className = "tryit-list";
+    (step.checklist || []).forEach((item, i) => {
+      const li = document.createElement("li");
+      const id = "try_" + stepIndex + "_" + i;
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.id = id;
+      const lab = document.createElement("label");
+      lab.htmlFor = id;
+      lab.textContent = item;
+      li.appendChild(cb);
+      li.appendChild(lab);
+      ul.appendChild(li);
+    });
+    q.appendChild(ul);
+    $("btnCheck").onclick = function () {
+      const boxes = ul.querySelectorAll("input[type=checkbox]");
+      const checked = Array.prototype.filter.call(boxes, (b) => b.checked).length;
+      if (checked === 0) {
+        showFeedback("hint", "Try at least one box in the real app — then check it! 🛠️");
+        return;
+      }
+      answeredCorrect = true;
+      const bonus = checked >= (step.checklist || []).length;
+      if (bonus) addXp(5, "full try-it");
+      showFeedback("good", bonus
+        ? "🔥 Full try-it streak! +5 XP — you actually built something!"
+        : "Nice effort! Trying in the real app is how concepts stick. (+ partial credit)");
+      $("btnCheck").classList.add("hidden");
+      $("btnNext").classList.remove("hidden");
+    };
+    return;
+  }
+
+  // Done step
+  if (step.type === "done") {
+    $("btnCheck").textContent = "🎉 Done!";
+    const prompt = document.createElement("p");
+    prompt.className = "step-prompt";
+    prompt.textContent = step.prompt || "Tap Done when you’re ready.";
+    q.appendChild(prompt);
+    $("btnCheck").onclick = function () {
+      answeredCorrect = true;
+      showFeedback("good", step.why || "You showed up — that’s real coding!");
+      $("btnCheck").classList.add("hidden");
+      $("btnNext").classList.remove("hidden");
+    };
+    return;
+  }
+
+  // Restore quiz check handler for interactive checks
+  $("btnCheck").textContent = "✅ Check Answer";
+  $("btnCheck").onclick = checkAnswer;
+
   const prompt = document.createElement("p");
+  prompt.className = "step-prompt";
   prompt.style.fontWeight = "800";
   prompt.style.fontSize = "1.15rem";
   prompt.style.marginBottom = "8px";
   prompt.textContent = step.prompt;
   q.appendChild(prompt);
 
-  if (step.type === "mcq") {
+  if (step.type === "mcq" || step.type === "scenario") {
     const wrap = document.createElement("div");
     wrap.className = "choices";
     let choices = step.choices.map((c, i) => ({ c: c, i: i }));
@@ -481,6 +626,35 @@ function renderStep() {
       wrap.appendChild(row);
     });
     q.appendChild(wrap);
+  } else if (step.type === "match") {
+    const wrap = document.createElement("div");
+    wrap.className = "match-list";
+    wrap.id = "matchList";
+    (step.pairs || []).forEach((pair, i) => {
+      const row = document.createElement("div");
+      row.className = "order-item";
+      const lab = document.createElement("span");
+      lab.textContent = pair.left;
+      lab.style.flex = "1";
+      const sel = document.createElement("select");
+      sel.dataset.idx = String(i);
+      const opts = step.pairs.map((p) => p.right);
+      const shuffled = opts.slice();
+      for (let a = shuffled.length - 1; a > 0; a--) {
+        const b = Math.floor(Math.random() * (a + 1));
+        const t = shuffled[a]; shuffled[a] = shuffled[b]; shuffled[b] = t;
+      }
+      shuffled.forEach((r) => {
+        const o = document.createElement("option");
+        o.value = r;
+        o.textContent = r;
+        sel.appendChild(o);
+      });
+      row.appendChild(lab);
+      row.appendChild(sel);
+      wrap.appendChild(row);
+    });
+    q.appendChild(wrap);
   }
 }
 
@@ -504,9 +678,9 @@ function offerSkipAhead() {
   box.classList.remove("hidden");
   box.innerHTML =
     '<div class="skip-card">' +
-    "<p>🚀 <strong>You’re flying!</strong> Skip the rest of this lesson?</p>" +
+    "<p>🚀 <strong>You’re flying!</strong> Concept check crushed — skip to claim XP?</p>" +
     '<div class="nav-row">' +
-    '<button type="button" class="btn btn-mint" id="btnSkipYes">Skip to finish ⭐</button>' +
+    '<button type="button" class="btn btn-mint" id="btnSkipYes">Skip to mastery ⭐</button>' +
     '<button type="button" class="btn btn-ghost" id="btnSkipNo">Keep going</button>' +
     "</div></div>";
   $("btnSkipYes").addEventListener("click", () => {
@@ -551,17 +725,22 @@ function checkAnswer() {
       return picked[i] === step.answerOrder.indexOf(i) + 1;
     });
     if (new Set(picked).size !== picked.length) correct = false;
+  } else if (step.type === "match") {
+    const sels = Array.prototype.slice.call($("matchList").querySelectorAll("select"));
+    correct = sels.every((sel, i) => sel.value === step.pairs[i].right);
   }
 
   if (correct) {
     answeredCorrect = true;
     state.wrongStreak[key] = 0;
     state.streakCorrect = (state.streakCorrect || 0) + 1;
+    if (state.streakCorrect > (state.bestStreak || 0)) state.bestStreak = state.streakCorrect;
     hardMode = state.streakCorrect >= 2;
-    showFeedback("good", "🎉 Yes! " + step.why);
+    addXp(8, "check");
+    showFeedback("good", "🎉 Yes! +" + 8 + " XP — " + step.why);
     $("btnCheck").classList.add("hidden");
     $("btnNext").classList.remove("hidden");
-    if (step.type === "mcq") {
+    if (step.type === "mcq" || step.type === "scenario") {
       $("questionArea").querySelectorAll(".choice").forEach((btn) => {
         if (Number(btn.dataset.index) === step.answer) btn.classList.add("correct");
       });
@@ -617,24 +796,41 @@ function maybeBadge() {
 }
 
 function finishLesson(skipped) {
+  const lesson = LESSONS[currentLessonId];
   const wasNew = !state.completed[currentLessonId];
   state.completed[currentLessonId] = true;
+  state.currentMission = lesson.title;
+  let xpGain = 0;
+  let badgeMsg = "";
   if (wasNew) {
     state.stars = (state.stars || 0) + 1;
+    xpGain = lesson.xpReward || 25;
+    if (skipped) xpGain = Math.max(15, Math.floor(xpGain * 0.75));
+    addXp(xpGain, "mission");
+    if (lesson.badge) {
+      if (!state.conceptBadges) state.conceptBadges = [];
+      if (state.conceptBadges.indexOf(lesson.badge) === -1) {
+        state.conceptBadges.push(lesson.badge);
+        badgeMsg = '<p class="badge-pop">Badge unlocked: <strong>' + lesson.badge + '</strong></p>';
+      }
+    }
     maybeBadge();
   }
   saveState(state);
   updateHome();
 
+  const lv = levelFromXp(state.xp || 0);
   const skipNote = skipped
-    ? "<p>You skipped ahead because you were on fire — lesson marked done!</p>"
+    ? "<p>🚀 Fast grasp! You skipped ahead — mission still counts.</p>"
     : "";
-  $("stepTitle").textContent = "You finished this lesson! 🌟";
+  $("stepTitle").textContent = "Concept mastered! 🌟";
   $("stepBody").innerHTML =
     '<div class="celebrate">🎉</div>' +
+    "<p>You guided yourself through the idea — not just clicked answers.</p>" +
     (wasNew
-      ? "<p>You earned a star! Total: <strong>" + state.stars + "</strong></p>"
-      : "<p>Nice review! Stars stay at <strong>" + state.stars + "</strong>.</p>") +
+      ? "<p>+" + xpGain + " XP · Total <strong>" + (state.xp || 0) + " XP</strong> · " + lv.emoji + " <strong>" + lv.title + "</strong></p>"
+      : "<p>Nice review! XP stays at <strong>" + (state.xp || 0) + "</strong>.</p>") +
+    badgeMsg +
     skipNote;
   $("questionArea").innerHTML = "";
   $("feedbackBox").className = "feedback";
@@ -645,7 +841,7 @@ function finishLesson(skipped) {
   }
   $("btnCheck").classList.add("hidden");
   $("btnNext").classList.remove("hidden");
-  $("btnNext").textContent = "Back to lessons →";
+  $("btnNext").textContent = "Back to missions →";
   $("btnNext").onclick = function () {
     $("btnNext").textContent = "Next →";
     $("btnNext").onclick = nextStep;
@@ -770,11 +966,20 @@ function renderParent() {
       last = state.lastActivity;
     }
   }
+  const lv = levelFromXp(state.xp || 0);
   $("parentStats").innerHTML =
     '<div class="stat"><div class="num">' + pct + '%</div><div class="lbl">Progress</div></div>' +
-    '<div class="stat"><div class="num">' + done + '</div><div class="lbl">Lessons done</div></div>' +
-    '<div class="stat"><div class="num">' + (state.stars || 0) + '</div><div class="lbl">Stars</div></div>' +
+    '<div class="stat"><div class="num">' + done + '</div><div class="lbl">Missions</div></div>' +
+    '<div class="stat"><div class="num">' + (state.xp || 0) + '</div><div class="lbl">XP · ' + lv.title + '</div></div>' +
+    '<div class="stat"><div class="num">' + (state.bestStreak || 0) + '</div><div class="lbl">Best streak</div></div>' +
     '<div class="stat"><div class="num" style="font-size:1rem;padding-top:8px">' + last + '</div><div class="lbl">Last activity</div></div>';
+  if ($("parentMission")) {
+    $("parentMission").textContent = "Current mission: " + (state.currentMission || state.lastLesson || "—");
+  }
+  if ($("parentBadges")) {
+    const cbs = state.conceptBadges || [];
+    $("parentBadges").textContent = cbs.length ? ("Concept badges: " + cbs.join(" · ")) : "Concept badges: none yet";
+  }
   const pt = $("parentTracks");
   pt.innerHTML = "";
   TRACKS.slice().sort((a, b) => a.order - b.order).forEach((t) => {

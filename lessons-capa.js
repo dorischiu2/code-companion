@@ -3,36 +3,38 @@ const LESSONS_CAPA = {
     "id": "ca1",
     "track": "capA",
     "title": "Pick & Plan",
+    "badge": "🎯 Focus Champ",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Choose one",
-        "teach": "Pick ONE idea from an earlier track (Scratch game, Roblox obby, Python greeter, JS button…).",
-        "type": "mcq",
-        "prompt": "Capstone A works best when you…",
-        "choices": [
-          "Pick one clear project",
-          "Start twelve projects the same day",
-          "Avoid any plan",
-          "Never decide"
-        ],
-        "answer": 0,
-        "why": "Focus beats chaos.",
-        "hint": "One idea."
+        "type": "mission",
+        "title": "🏆 Capstone A: Pick & plan!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Pick & Plan</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Define done",
-        "teach": "Write what “done” means: e.g. 5 platforms + finish pad, or button changes text.",
-        "type": "mcq",
-        "prompt": "A done definition helps you…",
-        "choices": [
-          "Know when to stop and celebrate",
-          "Code forever with no goal",
-          "Hide your work",
-          "Skip playtesting"
+        "type": "tryit",
+        "title": "🛠️ Try this in Your project",
+        "teach": "Hands-on beats guessing. Do these in <strong>Your project</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Pick ONE project idea",
+          "Write a 3-line done definition",
+          "Build the smallest playable version"
         ],
-        "answer": 0,
-        "why": "Done = clear finish line.",
-        "hint": "Write it down."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Focus + a clear ‘done’ beats starting twelve projects.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "ca1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Plan",
@@ -53,19 +55,6 @@ const LESSONS_CAPA = {
         ],
         "why": "Pick → plan → build → test.",
         "hint": "Choose first."
-      },
-      {
-        "title": "Word",
-        "teach": "A finished mini project you share is a…",
-        "type": "fill",
-        "prompt": "Word teachers love:",
-        "answerText": "capstone",
-        "accept": [
-          "capstone",
-          "project"
-        ],
-        "why": "Capstone = showcase project.",
-        "hint": "c _ _ _ _ _ _ _"
       }
     ]
   },
@@ -73,7 +62,39 @@ const LESSONS_CAPA = {
     "id": "ca2",
     "track": "capA",
     "title": "Ship & Reflect",
+    "badge": "📣 Demo Star",
+    "xpReward": 25,
     "steps": [
+      {
+        "type": "mission",
+        "title": "📣 Capstone A: Ship & reflect!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Ship & Reflect</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
+      },
+      {
+        "type": "tryit",
+        "title": "🛠️ Try this in Your project",
+        "teach": "Hands-on beats guessing. Do these in <strong>Your project</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Test it yourself",
+          "Write 3 sentences explaining it",
+          "List 2 improvements for Capstone B"
+        ],
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Shipping + explaining + reflecting = real growth.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "ca2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
+      },
       {
         "title": "Test",
         "teach": "You must run/play your project yourself before showing it.",
@@ -88,51 +109,6 @@ const LESSONS_CAPA = {
         "answer": 0,
         "why": "Authors playtest first.",
         "hint": "Be player #1."
-      },
-      {
-        "title": "Explain",
-        "teach": "Write 3 sentences: what it is, how to play/use it, what you’re proud of.",
-        "type": "mcq",
-        "prompt": "Explaining your project helps…",
-        "choices": [
-          "Others (and you) understand it",
-          "The code run faster automatically",
-          "Unity export to Roblox magically",
-          "Python become Scratch"
-        ],
-        "answer": 0,
-        "why": "Communication is a coding skill.",
-        "hint": "Teach your demo."
-      },
-      {
-        "title": "Improvements",
-        "teach": "List 2 improvements for Capstone B — features or polish.",
-        "type": "mcq",
-        "prompt": "Noting improvements prepares…",
-        "choices": [
-          "Capstone B level-ups",
-          "Deleting Capstone A",
-          "Quitting coding",
-          "Hiding the README"
-        ],
-        "answer": 0,
-        "why": "Reflection fuels growth.",
-        "hint": "Two ideas is enough."
-      },
-      {
-        "title": "Celebrate",
-        "teach": "You shipped something! That’s the real win.",
-        "type": "mcq",
-        "prompt": "Shipping a tiny project means…",
-        "choices": [
-          "You practiced the whole path",
-          "You failed coding forever",
-          "You must rewrite Unity from scratch",
-          "You should never code again"
-        ],
-        "answer": 0,
-        "why": "Shipping is success.",
-        "hint": "High five!"
       }
     ]
   }

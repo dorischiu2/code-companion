@@ -327,3 +327,36 @@ footer.tip, .footer.tip {
   background: #F5F3FF;
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
 }
+
+/* Gamification HUD */
+.hud-row {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 8px 0;
+}
+.mission-pill {
+  background: #EEF2FF !important; color: #3730A3 !important; max-width: 100%;
+}
+.streak-hot {
+  background: #FFF7ED !important; color: #C2410C !important;
+  animation: pulseGlow 1.2s ease infinite;
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(249, 115, 22, 0); }
+}
+.tryit-list {
+  list-style: none; display: flex; flex-direction: column; gap: 10px; margin: 12px 0;
+}
+.tryit-list li {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: #F0FDF4; border: 3px solid #86EFAC; border-radius: 14px; padding: 14px;
+  font-weight: 700;
+}
+.tryit-list input { width: 24px; height: 24px; accent-color: var(--mint-dark); margin-top: 2px; }
+.step-prompt { font-weight: 800; margin: 8px 0 12px; }
+.badge-pop {
+  display: inline-block; margin-top: 10px; padding: 10px 16px;
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+  border: 3px solid #F59E0B; border-radius: 999px; font-weight: 800;
+}
+.teach-box.mission-glow { border-color: #A78BFA; background: linear-gradient(145deg, #F5F3FF, #EDE9FE); }
+.match-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }

@@ -3,51 +3,38 @@ const LESSONS_HTMLCSS = {
     "id": "hc1",
     "track": "htmlcss",
     "title": "HTML Tags",
+    "badge": "🏷️ Tag Trekker",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "HTML",
-        "teach": "HTML structures web pages with tags like h1, p, and button.",
-        "type": "mcq",
-        "prompt": "HTML’s main job is…",
-        "choices": [
-          "Structure the page content",
-          "Replace your GPU fans",
-          "Compile Unity Scenes",
-          "Anchor Roblox Parts"
-        ],
-        "answer": 0,
-        "why": "HTML = structure.",
-        "hint": "Tags wrap content."
+        "type": "mission",
+        "title": "🌐 Mission: Build a tiny web page!",
+        "teach": "Gear up, coder! Today’s quest: <strong>HTML Tags</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "h1 and p",
-        "teach": "<h1>Title</h1> is a big heading. <p>Hello</p> is a paragraph.",
-        "type": "mcq",
-        "prompt": "Which tag is a big heading?",
-        "choices": [
-          "h1",
-          "wifi",
-          "part",
-          "scene"
+        "type": "tryit",
+        "title": "🛠️ Try this in HTML",
+        "teach": "Hands-on beats guessing. Do these in <strong>HTML</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Create an .html file",
+          "Add <h1> and <p>",
+          "Open it in a browser"
         ],
-        "answer": 0,
-        "why": "h1 = heading level 1.",
-        "hint": "Biggest title."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Open in browser",
-        "teach": "Save as .html and open in Chrome/Edge/Safari to see your page.",
-        "type": "mcq",
-        "prompt": "To view HTML you usually…",
-        "choices": [
-          "Open the file in a browser",
-          "Upload it to a toaster",
-          "Compile it as C# first",
-          "Put it only in Explorer Workspace"
-        ],
-        "answer": 0,
-        "why": "Browsers render HTML.",
-        "hint": "Double-click / open with."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "HTML tags structure content (headings, paragraphs).",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "hc1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Tag",
@@ -69,51 +56,38 @@ const LESSONS_HTMLCSS = {
     "id": "hc2",
     "track": "htmlcss",
     "title": "CSS Style",
+    "badge": "🎨 Style Star",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "CSS",
-        "teach": "CSS styles HTML: colors, fonts, sizes, layout.",
-        "type": "mcq",
-        "prompt": "CSS is mainly for…",
-        "choices": [
-          "Look & style",
-          "Storing Roblox DataStores",
-          "Unity lighting only",
-          "Scratch costumes only"
-        ],
-        "answer": 0,
-        "why": "CSS = appearance.",
-        "hint": "Make it pretty."
+        "type": "mission",
+        "title": "🎨 Mission: Add color with CSS!",
+        "teach": "Gear up, coder! Today’s quest: <strong>CSS Style</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "color",
-        "teach": "h1 { color: purple; } makes headings purple.",
-        "type": "mcq",
-        "prompt": "color: purple in CSS changes…",
-        "choices": [
-          "Text color",
-          "Your street address",
-          "Python indentation rules",
-          "App Inventor emulator FPS"
+        "type": "tryit",
+        "title": "🛠️ Try this in CSS",
+        "teach": "Hands-on beats guessing. Do these in <strong>CSS</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Add a <style> or .css rule",
+          "Set a color or background",
+          "Refresh the browser"
         ],
-        "answer": 0,
-        "why": "color styles text.",
-        "hint": "Pick a fun color!"
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Where CSS lives",
-        "teach": "CSS can be in a <style> tag, a .css file, or style=”…” (inline).",
-        "type": "mcq",
-        "prompt": "A separate styles.css file is…",
-        "choices": [
-          "A common way to store CSS",
-          "A Roblox Mesh",
-          "A Unity Scene",
-          "A Hopscotch object"
-        ],
-        "answer": 0,
-        "why": "External CSS keeps pages tidy.",
-        "hint": "Link the stylesheet."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "CSS styles how HTML looks — color, size, layout.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "hc2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Language",
@@ -134,7 +108,39 @@ const LESSONS_HTMLCSS = {
     "id": "hc3",
     "track": "htmlcss",
     "title": "A Tiny Page",
+    "badge": "📄 Page Pilot",
+    "xpReward": 25,
     "steps": [
+      {
+        "type": "mission",
+        "title": "👤 Mission: Ship a mini profile page!",
+        "teach": "Gear up, coder! Today’s quest: <strong>A Tiny Page</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
+      },
+      {
+        "type": "tryit",
+        "title": "🛠️ Try this in HTML/CSS",
+        "teach": "Hands-on beats guessing. Do these in <strong>HTML/CSS</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Write about-you text",
+          "Add one style",
+          "Open in a browser and smile"
+        ],
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Structure + style + clear writing = a friendly page.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "hc3",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
+      },
       {
         "title": "Build order",
         "teach": "",
@@ -154,51 +160,6 @@ const LESSONS_HTMLCSS = {
         ],
         "why": "Structure → style → save → view.",
         "hint": "HTML first."
-      },
-      {
-        "title": "Good content",
-        "teach": "Write a short about-me: name, favorite game, and one coding goal.",
-        "type": "mcq",
-        "prompt": "A friendly first page includes…",
-        "choices": [
-          "Clear text someone can read",
-          "Only 10,000 empty divs",
-          "Secret passwords in plain sight",
-          "Invisible unbroken text"
-        ],
-        "answer": 0,
-        "why": "Readable content wins.",
-        "hint": "Be kind to readers."
-      },
-      {
-        "title": "Inspect",
-        "teach": "Browser DevTools (Inspect) let you peek at HTML/CSS — great for learning!",
-        "type": "mcq",
-        "prompt": "Inspect / DevTools help you…",
-        "choices": [
-          "See how a page is built",
-          "Delete the internet",
-          "Anchor Parts",
-          "Compile Luau"
-        ],
-        "answer": 0,
-        "why": "Inspect is a learning superpower.",
-        "hint": "Right-click → Inspect."
-      },
-      {
-        "title": "Next",
-        "teach": "JavaScript will make buttons and text change after the page loads.",
-        "type": "mcq",
-        "prompt": "JS adds…",
-        "choices": [
-          "Interactivity",
-          "Only paper printing",
-          "Only Unity meshes",
-          "Only Scratch sounds"
-        ],
-        "answer": 0,
-        "why": "JS = behavior in the browser.",
-        "hint": "Click → change."
       }
     ]
   }

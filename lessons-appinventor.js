@@ -3,51 +3,38 @@ const LESSONS_APPINVENTOR = {
     "id": "ai1",
     "track": "appinventor",
     "title": "Designer View",
+    "badge": "🧩 UI Builder",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "What is App Inventor?",
-        "teach": "MIT App Inventor lets you build phone apps with a Designer (layout) and Blocks (logic).",
-        "type": "mcq",
-        "prompt": "App Inventor has two main views…",
-        "choices": [
-          "Designer and Blocks",
-          "Only Spreadsheet and Email",
-          "Only Camera and Flashlight hardware menus",
-          "Only Roblox and Unity"
-        ],
-        "answer": 0,
-        "why": "Designer = look, Blocks = behavior.",
-        "hint": "Two sides of one app."
+        "type": "mission",
+        "title": "📲 Mission: Design a phone screen!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Designer View</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Components",
-        "teach": "Drag components like Button, Label, TextBox onto the viewer.",
-        "type": "mcq",
-        "prompt": "A Button in the Designer is a…",
-        "choices": [
-          "Component / UI piece",
-          "Python virus",
-          "Roblox Part",
-          "Unity Scene only"
+        "type": "tryit",
+        "title": "🛠️ Try this in App Inventor",
+        "teach": "Hands-on beats guessing. Do these in <strong>App Inventor</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Open App Inventor Designer",
+          "Add a Button",
+          "Add a Label"
         ],
-        "answer": 0,
-        "why": "UI pieces are components.",
-        "hint": "Buttons live in Designer."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Label",
-        "teach": "Labels show text to the user. Buttons are for tapping.",
-        "type": "mcq",
-        "prompt": "To show the words “Hello”, you’d often use a…",
-        "choices": [
-          "Label",
-          "Invisible Wi-Fi antenna",
-          "Random GPS satellite",
-          "School bell only"
-        ],
-        "answer": 0,
-        "why": "Labels display text.",
-        "hint": "Hello on screen."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Designer = how it looks. Components are UI pieces.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "ai1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "View name",
@@ -68,21 +55,39 @@ const LESSONS_APPINVENTOR = {
     "id": "ai2",
     "track": "appinventor",
     "title": "Blocks View",
+    "badge": "🔗 Event Linker",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "When Button.Click",
-        "teach": "In Blocks, snap: when Button1.Click → set Label1.Text to \"Hi!\"",
-        "type": "mcq",
-        "prompt": "Button.Click is an…",
-        "choices": [
-          "Event",
-          "Paint color only",
-          "App Store review",
-          "Battery percent"
+        "type": "mission",
+        "title": "🧱 Mission: Make the button DO something!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Blocks View</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
+      },
+      {
+        "type": "tryit",
+        "title": "🛠️ Try this in App Inventor",
+        "teach": "Hands-on beats guessing. Do these in <strong>App Inventor</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Open Blocks view",
+          "Add when Button.Click",
+          "Set Label text",
+          "Test in emulator/Companion"
         ],
-        "answer": 0,
-        "why": "Click is an event.",
-        "hint": "When clicked → …"
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Blocks view = behavior. Click is an event — just like Scratch!",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "ai2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "First app",
@@ -103,36 +108,6 @@ const LESSONS_APPINVENTOR = {
         ],
         "why": "UI → Blocks → event → test.",
         "hint": "Designer first."
-      },
-      {
-        "title": "Emulator",
-        "teach": "Test with an emulator or MIT AI2 Companion on a device.",
-        "type": "mcq",
-        "prompt": "Before sharing an app, you should…",
-        "choices": [
-          "Test it (emulator/device)",
-          "Delete the Button forever",
-          "Never open Blocks",
-          "Remove all Labels"
-        ],
-        "answer": 0,
-        "why": "Always test.",
-        "hint": "Companion/emulator helps."
-      },
-      {
-        "title": "Transfer",
-        "teach": "Events + actions here feel like Scratch — you’re ready for bigger coding!",
-        "type": "mcq",
-        "prompt": "App Inventor skills connect to…",
-        "choices": [
-          "Event-driven coding everywhere",
-          "Only underwater basket weaving",
-          "Only paper maps",
-          "Only toaster firmware"
-        ],
-        "answer": 0,
-        "why": "Events transfer across tools.",
-        "hint": "When → then, again."
       }
     ]
   }

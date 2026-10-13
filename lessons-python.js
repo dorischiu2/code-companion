@@ -3,51 +3,38 @@ const LESSONS_PYTHON = {
     "id": "py1",
     "track": "python",
     "title": "Hello Python",
+    "badge": "🖨️ Print Pilot",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "What is Python?",
-        "teach": "Python is a text coding language used in schools, games tools, AI, and websites. You type instructions line by line.",
-        "type": "mcq",
-        "prompt": "Python code is usually…",
-        "choices": [
-          "Typed as text",
-          "Only painted with a brush",
-          "Only snapped as Scratch blocks",
-          "Only spoken in pirate"
-        ],
-        "answer": 0,
-        "why": "Python is text-based.",
-        "hint": "print(\"Hi\") is text."
+        "type": "mission",
+        "title": "🐍 Mission: Say hello in Python!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Hello Python</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "print",
-        "teach": "print(\"Hi\") shows Hi on the screen/output.",
-        "type": "mcq",
-        "prompt": "Which line shows Hi?",
-        "choices": [
-          "print(\"Hi\")",
-          "shout Hi",
-          "explode(\"Hi\")",
-          "Part.Hi"
+        "type": "tryit",
+        "title": "🛠️ Try this in Python",
+        "teach": "Hands-on beats guessing. Do these in <strong>Python</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Open a Python editor",
+          "Type print(\"Hi\")",
+          "Run it and see the output"
         ],
-        "answer": 0,
-        "why": "print writes to output.",
-        "hint": "Remember the parentheses."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Quotes",
-        "teach": "Text values (strings) use quotes: \"Alexa\" or 'Alexa'.",
-        "type": "mcq",
-        "prompt": "In print(\"Alexa\"), Alexa is a…",
-        "choices": [
-          "String (text)",
-          "Integer only",
-          "Button component",
-          "Unity Scene"
-        ],
-        "answer": 0,
-        "why": "Quotes mark text.",
-        "hint": "Strings = text."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "print() shows text. Strings use quotes.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "py1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Command",
@@ -67,51 +54,38 @@ const LESSONS_PYTHON = {
     "id": "py2",
     "track": "python",
     "title": "Variables",
+    "badge": "🏷️ Name Ninja",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Variables store",
-        "teach": "name = \"Alexa\" stores text in a box called name.",
-        "type": "mcq",
-        "prompt": "A variable is…",
-        "choices": [
-          "A named place to store a value",
-          "A broken keyboard key",
-          "A type of pizza only",
-          "A Roblox material"
-        ],
-        "answer": 0,
-        "why": "Variables store values.",
-        "hint": "Labeled boxes."
+        "type": "mission",
+        "title": "📦 Mission: Name a value!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Variables</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Use it",
-        "teach": "After name = \"Alexa\", print(name) shows Alexa.",
-        "type": "mcq",
-        "prompt": "What does print(name) need first?",
-        "choices": [
-          "A variable name already set",
-          "A Unity license",
-          "A Hopscotch account",
-          "A green flag block"
+        "type": "tryit",
+        "title": "🛠️ Try this in Python",
+        "teach": "Hands-on beats guessing. Do these in <strong>Python</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Write name = \"Alexa\"",
+          "print(name)",
+          "Try score = 0"
         ],
-        "answer": 0,
-        "why": "Define before use.",
-        "hint": "Create the box first."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Numbers",
-        "teach": "score = 0 stores a number. You can later do score = score + 1.",
-        "type": "mcq",
-        "prompt": "score = 0 stores a…",
-        "choices": [
-          "Number",
-          "Sprite costume",
-          "HTML tag",
-          "Phone Button"
-        ],
-        "answer": 0,
-        "why": "Numbers don’t need quotes.",
-        "hint": "0 is an int."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Variables store values you can reuse.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "py2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Assign",
@@ -131,51 +105,37 @@ const LESSONS_PYTHON = {
     "id": "py3",
     "track": "python",
     "title": "If & Input",
+    "badge": "🔀 Branch Boss",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "if decisions",
-        "teach": "if score > 10: print(\"Win!\") runs the indented line only when the condition is true.",
-        "type": "mcq",
-        "prompt": "if is used for…",
-        "choices": [
-          "Decisions / conditions",
-          "Drawing 3D Parts only",
-          "Only CSS colors",
-          "Deleting Python"
-        ],
-        "answer": 0,
-        "why": "if branches your program.",
-        "hint": "True → run block."
+        "type": "mission",
+        "title": "🔀 Mission: Make a decision!",
+        "teach": "Gear up, coder! Today’s quest: <strong>If & Input</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Indentation",
-        "teach": "Python uses indentation (spaces) to show which lines belong inside if/loops.",
-        "type": "mcq",
-        "prompt": "In Python, indenting under if means…",
-        "choices": [
-          "Those lines belong to the if",
-          "The code is broken forever",
-          "It becomes JavaScript",
-          "It becomes a photo"
+        "type": "tryit",
+        "title": "🛠️ Try this in Python",
+        "teach": "Hands-on beats guessing. Do these in <strong>Python</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Try an if line with indentation",
+          "Try input(\"Your name? \") if you can"
         ],
-        "answer": 0,
-        "why": "Indent = structure.",
-        "hint": "Spaces matter!"
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "input",
-        "teach": "name = input(\"Your name? \") asks the player and stores what they type.",
-        "type": "mcq",
-        "prompt": "input() is for…",
-        "choices": [
-          "Reading what the user types",
-          "Moving Roblox Parts",
-          "Painting Unity skies",
-          "Snapping Scratch blocks"
-        ],
-        "answer": 0,
-        "why": "input gets user text.",
-        "hint": "Ask → store."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "if = decisions. Indentation shows which lines belong together.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "py3",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Tiny quiz program",
@@ -203,51 +163,38 @@ const LESSONS_PYTHON = {
     "id": "py4",
     "track": "python",
     "title": "Loops",
+    "badge": "🔁 Loop Legend",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "for loops",
-        "teach": "for i in range(3): print(i) repeats a few times with a counter.",
-        "type": "mcq",
-        "prompt": "for i in range(3) is a…",
-        "choices": [
-          "Loop",
-          "Sprite",
-          "Scene",
-          "Button"
-        ],
-        "answer": 0,
-        "why": "for repeats with a sequence.",
-        "hint": "range makes numbers."
+        "type": "mission",
+        "title": "🔁 Mission: Loop three cheers!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Loops</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "while loops",
-        "teach": "while energy > 0: keeps going until the condition becomes false — careful of infinite loops!",
-        "type": "mcq",
-        "prompt": "A while loop needs…",
-        "choices": [
-          "A condition that can become false",
-          "A green Scratch flag",
-          "A Unity cube",
-          "An App Inventor Label"
+        "type": "tryit",
+        "title": "🛠️ Try this in Python",
+        "teach": "Hands-on beats guessing. Do these in <strong>Python</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Write for i in range(3):",
+          "print a cheer inside (indented)",
+          "Run it"
         ],
-        "answer": 0,
-        "why": "Conditions should end sometime.",
-        "hint": "Avoid forever-while bugs."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "First project idea",
-        "teach": "Print a greeting, store a score, loop 5 cheers — that’s a real Python mini project!",
-        "type": "mcq",
-        "prompt": "A good first Python project includes…",
-        "choices": [
-          "print + a variable + a small loop",
-          "Deleting the interpreter",
-          "Only secret assembly",
-          "Only HTML forms"
-        ],
-        "answer": 0,
-        "why": "Small + working beats huge + broken.",
-        "hint": "Tiny wins."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Loops repeat. for + range counts; while needs an end condition.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "py4",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "range",

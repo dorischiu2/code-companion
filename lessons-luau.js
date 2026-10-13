@@ -3,51 +3,38 @@ const LESSONS_LUAU = {
     "id": "l1",
     "track": "roblox",
     "title": "What is a Script?",
+    "badge": "📜 Script Scout",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Scripts = instructions",
-        "teach": "A <strong>Script</strong> is a little program written in <strong>Luau</strong> (Roblox's language). It tells the game what to do — like 'when touched, change color'.",
-        "type": "mcq",
-        "prompt": "Luau is…",
-        "choices": [
-          "Roblox's programming language",
-          "A type of Part shape",
-          "A toolbar button for Terrain only",
-          "A friend status"
-        ],
-        "answer": 0,
-        "why": "Luau is the language Roblox scripts use.",
-        "hint": "It's how you write instructions for the game."
+        "type": "mission",
+        "title": "📜 Mission: Meet Luau scripts!",
+        "teach": "Gear up, coder! Today’s quest: <strong>What is a Script?</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Where scripts live",
-        "teach": "You can insert a Script inside a Part (or in ServerScriptService). For touch effects, putting a Script inside the Part is a friendly start.",
-        "type": "mcq",
-        "prompt": "A good first place for a 'when touched' Script?",
-        "choices": [
-          "Inside the Part you care about",
-          "Inside the player's lunchbox",
-          "Only in Lighting",
-          "In the skybox texture"
+        "type": "tryit",
+        "title": "🛠️ Try this in Roblox Studio",
+        "teach": "Hands-on beats guessing. Do these in <strong>Roblox Studio</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Right-click a Part → Insert Script (or similar)",
+          "Open the Script",
+          "Find script.Parent in your mind"
         ],
-        "answer": 0,
-        "why": "Scripts parented to a Part can listen to that Part's events.",
-        "hint": "Right-click Part → Insert Object → Script (typical flow)."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "script.Parent",
-        "teach": "Inside a Script under a Part, <code>script.Parent</code> means 'the Part that holds this script'.",
-        "type": "mcq",
-        "prompt": "If a Script is inside FinishPad, script.Parent is…",
-        "choices": [
-          "FinishPad (the Part)",
-          "The whole internet",
-          "Lighting",
-          "A random player"
-        ],
-        "answer": 0,
-        "why": "Parent = the object containing the Script.",
-        "hint": "Parent = container."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Luau scripts are instructions. script.Parent = the Part holding the script.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "l1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Fill it in",
@@ -69,51 +56,37 @@ const LESSONS_LUAU = {
     "id": "l2",
     "track": "roblox",
     "title": "Variables",
+    "badge": "📦 Variable Voyager",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Boxes for values",
-        "teach": "A <strong>variable</strong> stores a value with a name. Example: <code>local points = 0</code> or <code>local pad = script.Parent</code>.",
-        "type": "mcq",
-        "prompt": "What does a variable do?",
-        "choices": [
-          "Stores a value with a name",
-          "Deletes Workspace",
-          "Only changes the sky",
-          "Locks Anchored forever"
-        ],
-        "answer": 0,
-        "why": "Variables remember numbers, objects, text, and more.",
-        "hint": "Like a labeled box."
+        "type": "mission",
+        "title": "📦 Mission: Store values in variables!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Variables</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "local is common",
-        "teach": "In Luau, beginners often write <code>local name = value</code>. <code>local</code> keeps the variable in that script's scope — a good habit.",
-        "type": "mcq",
-        "prompt": "Which line correctly makes a local variable for a Part?",
-        "choices": [
-          "local pad = script.Parent",
-          "pad local = script.Parent",
-          "script.Parent = local pad",
-          "local = pad script.Parent"
+        "type": "tryit",
+        "title": "🛠️ Try this in Roblox Studio",
+        "teach": "Hands-on beats guessing. Do these in <strong>Roblox Studio</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Write local pad = script.Parent in a Script (or read an example)",
+          "Think of a score variable = 0"
         ],
-        "answer": 0,
-        "why": "local name = value is the usual pattern.",
-        "hint": "local comes first."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Change properties with variables",
-        "teach": "Once you have the Part: <code>pad.BrickColor = BrickColor.new(\"Bright green\")</code> or set <code>pad.Transparency</code>.",
-        "type": "mcq",
-        "prompt": "To recolor a Part from a Script, you usually change a…",
-        "choices": [
-          "Property (like BrickColor)",
-          "The Explorer title bar",
-          "The Play button icon",
-          "Your Wi-Fi name"
-        ],
-        "answer": 0,
-        "why": "Scripts edit Properties in code.",
-        "hint": "Same Properties panel — but from code."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Variables are named boxes for values (numbers, Parts, text).",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "l2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Practice",
@@ -134,51 +107,38 @@ const LESSONS_LUAU = {
     "id": "l3",
     "track": "roblox",
     "title": "Touched Event",
+    "badge": "👋 Touch Titan",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Events = something happened",
-        "teach": "An <strong>event</strong> fires when something happens. <code>Touched</code> fires when another object bumps your Part — perfect for finish pads & checkpoints!",
-        "type": "mcq",
-        "prompt": "Touched fires when…",
-        "choices": [
-          "Something bumps into the Part",
-          "You open Properties",
-          "You rename the place file",
-          "The sun sets in real life"
-        ],
-        "answer": 0,
-        "why": "Touched = collision/contact with the Part.",
-        "hint": "Touch → Touched."
+        "type": "mission",
+        "title": "👋 Mission: Detect a Touch!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Touched Event</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Connect a function",
-        "teach": "Pattern: <code>part.Touched:Connect(function(hit) … end)</code>. The code inside runs each time something touches.",
-        "type": "mcq",
-        "prompt": "Which piece hooks up a Touched handler?",
-        "choices": [
-          ":Connect(function(hit) … end)",
-          ":Delete(hit)",
-          ":Anchored(true)",
-          ":Play()"
+        "type": "tryit",
+        "title": "🛠️ Try this in Roblox Studio",
+        "teach": "Hands-on beats guessing. Do these in <strong>Roblox Studio</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Plan: Part.Touched:Connect(…)",
+          "Imagine changing color on touch",
+          "Play-test by touching the Part"
         ],
-        "answer": 0,
-        "why": "Connect attaches your function to the event.",
-        "hint": "Connect the wires!"
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "hit is the other thing",
-        "teach": "The <code>hit</code> argument is usually the Part that touched you. Players' characters have Parts too — later you can check if a Humanoid touched.",
-        "type": "mcq",
-        "prompt": "In Touched:Connect(function(hit), hit is usually…",
-        "choices": [
-          "The object that touched your Part",
-          "The skybox",
-          "Always empty",
-          "The Explorer window"
-        ],
-        "answer": 0,
-        "why": "hit = the touching object (often a character limb Part).",
-        "hint": "Who bumped me?"
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Touched is an event — it fires when something bumps the Part.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "l3",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Idea → finish pad",
@@ -206,51 +166,38 @@ const LESSONS_LUAU = {
     "id": "l4",
     "track": "roblox",
     "title": "Change Properties in Code",
+    "badge": "🪄 Code Painter",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Code paints Parts",
-        "teach": "Examples: <code>part.Transparency = 0.5</code> (see-through), <code>part.CanCollide = false</code> (walk-through — careful!), <code>part.Anchored = true</code>.",
-        "type": "mcq",
-        "prompt": "Setting Transparency = 1 roughly means…",
-        "choices": [
-          "Fully see-through / invisible",
-          "Twice as heavy",
-          "Deletes the Script",
-          "Locks Move tool"
-        ],
-        "answer": 0,
-        "why": "Transparency 0 = opaque, 1 = invisible.",
-        "hint": "1 = fully transparent."
+        "type": "mission",
+        "title": "🎨 Mission: Change Properties in code!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Change Properties in Code</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "Safety first",
-        "teach": "Don't turn CanCollide off on every platform or players fall through! Use property changes on purpose.",
-        "type": "mcq",
-        "prompt": "If players fall through a platform, check…",
-        "choices": [
-          "CanCollide (and Anchored)",
-          "Only the sky color",
-          "Friend list",
-          "Plugin Manager only"
+        "type": "tryit",
+        "title": "🛠️ Try this in Roblox Studio",
+        "teach": "Hands-on beats guessing. Do these in <strong>Roblox Studio</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Set Transparency or BrickColor in a Script idea",
+          "Keep CanCollide on for platforms",
+          "Test a tiny win: touch → green"
         ],
-        "answer": 0,
-        "why": "CanCollide false = no solid collision.",
-        "hint": "Collision settings matter."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Tiny win script",
-        "teach": "A first win: on Touch, set BrickColor to bright green. That's real interactivity!",
-        "type": "mcq",
-        "prompt": "Best first interactive goal?",
-        "choices": [
-          "Touch pad → change color (or print You win)",
-          "Rewrite all of Roblox",
-          "Disable Studio permanently",
-          "Remove all Parts"
-        ],
-        "answer": 0,
-        "why": "Small wins teach the full loop.",
-        "hint": "Keep the first script tiny."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "Scripts edit the same Properties you see in the panel.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "l4",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Capstone ready",

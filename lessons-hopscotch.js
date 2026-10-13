@@ -3,51 +3,38 @@ const LESSONS_HOPSCOTCH = {
     "id": "hs1",
     "track": "hopscotch",
     "title": "Hopscotch Basics",
+    "badge": "⚡ When Wizard",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "What is Hopscotch?",
-        "teach": "Hopscotch is a kid-friendly coding app (often on iPad) where you use When rules and blocks to make things happen.",
-        "type": "mcq",
-        "prompt": "Hopscotch projects often run on…",
-        "choices": [
-          "A tablet / phone-style play area",
-          "A toaster",
-          "A fridge magnet only",
-          "A paper airplane"
-        ],
-        "answer": 0,
-        "why": "Hopscotch is made for touch devices.",
-        "hint": "Think tablet coding."
+        "type": "mission",
+        "title": "📱 Mission: Discover Hopscotch rules!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Hopscotch Basics</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
       },
       {
-        "title": "When rules",
-        "teach": "A When block says WHEN something happens (tap, shake, bump…), THEN do actions.",
-        "type": "mcq",
-        "prompt": "A When rule is about…",
-        "choices": [
-          "Reacting to an event",
-          "Deleting the app store",
-          "Painting your room",
-          "Changing your birthday"
+        "type": "tryit",
+        "title": "🛠️ Try this in Hopscotch",
+        "teach": "Hands-on beats guessing. Do these in <strong>Hopscotch</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Open Hopscotch",
+          "Add an object",
+          "Find a When rule"
         ],
-        "answer": 0,
-        "why": "When = event-driven coding.",
-        "hint": "When X → do Y."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
       },
       {
-        "title": "Objects",
-        "teach": "You add objects/characters, then attach rules to them — similar to sprites!",
-        "type": "mcq",
-        "prompt": "Coding in Hopscotch is attached to…",
-        "choices": [
-          "Objects / characters you add",
-          "Only the weather app",
-          "Your lunchbox",
-          "Random Wi-Fi names"
-        ],
-        "answer": 0,
-        "why": "Objects hold the rules.",
-        "hint": "Pick an object first."
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "When rules = event coding: WHEN something happens, THEN do actions.",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "hs1",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Word",
@@ -67,21 +54,38 @@ const LESSONS_HOPSCOTCH = {
     "id": "hs2",
     "track": "hopscotch",
     "title": "Tap to Move",
+    "badge": "📲 Tap Captain",
+    "xpReward": 25,
     "steps": [
       {
-        "title": "Tap event",
-        "teach": "Try: When iPad is tapped → Move forward. That’s a complete mini program!",
-        "type": "mcq",
-        "prompt": "A simple first project is…",
-        "choices": [
-          "Tap → move an object",
-          "Tap → format the disk",
-          "Tap → call space",
-          "Tap → delete Hopscotch"
+        "type": "mission",
+        "title": "👆 Mission: Tap → move!",
+        "teach": "Gear up, coder! Today’s quest: <strong>Tap to Move</strong>. Complete the mission steps to unlock XP and a concept badge.",
+        "prompt": "Ready for the mission?",
+        "why": "Missions make learning feel like a game!",
+        "hint": "Tap Let’s go!"
+      },
+      {
+        "type": "tryit",
+        "title": "🛠️ Try this in Hopscotch",
+        "teach": "Hands-on beats guessing. Do these in <strong>Hopscotch</strong>, then tap <strong>I tried it!</strong>",
+        "checklist": [
+          "Add When tapped",
+          "Add a move action",
+          "Press Play and tap"
         ],
-        "answer": 0,
-        "why": "Tap → move is a classic first win.",
-        "hint": "Keep it tiny."
+        "prompt": "Check each box as you go — then continue.",
+        "why": "Doing it in the real app builds muscle memory.",
+        "hint": "It’s OK if it’s messy — trying counts!"
+      },
+      {
+        "type": "concept",
+        "title": "💡 Concept card",
+        "teach": "A tiny program is Event + Action. Test it!",
+        "prompt": "Read it once more — then continue.",
+        "conceptKey": "hs2",
+        "why": "Short cards stick better than long lectures.",
+        "hint": "Say the idea out loud!"
       },
       {
         "title": "Plan it",
@@ -102,36 +106,6 @@ const LESSONS_HOPSCOTCH = {
         ],
         "why": "Object → When → action → Play.",
         "hint": "Need an object first."
-      },
-      {
-        "title": "Play",
-        "teach": "Press Play to test. If nothing moves, check your When rule is attached to the right object.",
-        "type": "mcq",
-        "prompt": "Nothing happens on tap. Smart check?",
-        "choices": [
-          "Check the When rule and object",
-          "Buy a new house",
-          "Turn off gravity Earth-wide",
-          "Rename your street"
-        ],
-        "answer": 0,
-        "why": "Debug the rule and target object.",
-        "hint": "Rules need the right home."
-      },
-      {
-        "title": "Next up",
-        "teach": "Hopscotch skills transfer to Scratch: events, actions, playtesting!",
-        "type": "mcq",
-        "prompt": "After Hopscotch, Scratch will feel…",
-        "choices": [
-          "Familiar (events + actions)",
-          "Completely unrelated to coding",
-          "Only about cooking",
-          "Only about passwords"
-        ],
-        "answer": 0,
-        "why": "Ideas transfer across tools.",
-        "hint": "Events everywhere!"
       }
     ]
   }
