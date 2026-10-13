@@ -56,7 +56,7 @@
       clearTimeout(this._pendT); this.pending = false;
       this.clearHighlight();
       if (k >= this.m.steps.length) return this.complete();
-      this.i = k; this.stepStartIdx = this.log.length; this.stepT0 = performance.now(); this.hintsUsed = 0; this.fails = 0; this.reacted = 0; this.lastActT = performance.now();
+      this.i = k; this.skipShown = false; this.stepStartIdx = this.log.length; this.stepT0 = performance.now(); this.hintsUsed = 0; this.fails = 0; this.reacted = 0; this.lastActT = performance.now();
       const s = this.step; this.renderDots();
       this.ui.show.classList.toggle("hidden", !s.demo && !s.ghost);
       this.ui.show.classList.remove("pulse");
@@ -79,9 +79,10 @@
       let ok = false;
       try { ok = s.check ? !!s.check(this.ctx(ev)) : false; } catch (e) { console.error(e); }
       if (ok) { this.succeed(); return; }
-      if (ev && s.react) {
-        let r = null; try { r = s.react(this.ctx(ev)); } catch (e) { console.error(e); }
-        if (r) {
+      let r = null;
+      if (ev && s.react) { try { r = s.react(this.ctx(ev)); } catch (e) { console.error(e); } }
+      if (r) {
+        {
           this.reacted++; this.fails++;
           this.bubble(r, "oops");
           if (this.fails >= 2) this.struggle();
@@ -120,6 +121,16 @@
       if (idle > 20 && this.hintsUsed === 0) this.hint(false);
       else if (idle > 45 && this.hintsUsed === 1) { this.hint(false); this.struggle(); }
       if (s.poll && s.check) this.evaluate({ type: "poll" });
+      // safety net: never leave a kid stuck
+      if (!this.pending && !this.skipShown && (idle > 75 || this.fails >= 4)) this.offerSkip();
+    }
+    offerSkip() {
+      this.skipShown = true;
+      const b = this.ui.bubble; const wrap = document.createElement("div"); wrap.className = "tb-choices";
+      wrap.innerHTML = '<button type="button" class="btn btn-ghost tb-skipstep">⏭ Skip this step</button>';
+      b.appendChild(wrap);
+      wrap.querySelector("button").onclick = () => { this.fastRun = 0; this.goto(this.i + 1); };
+      this.ui.show.classList.add("pulse");
     }
     hint(manual) {
       const s = this.step; if (!s) return;

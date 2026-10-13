@@ -9,40 +9,62 @@
   const pyReact = (c) => ev(c, "pyload-failed") ? "Python needs the internet the first time it loads. Connect and press ▶ Run again." : null;
 
   // ---------- Python ----------
+  const low = (c) => out(c).toLowerCase().replace(/[ \t]+/g, " ");
+  const lines = (c) => ((ran(c) || {}).lines || []).join("\n").split("\n").map((l) => l.trim()).filter(Boolean);
+  const vars = (c) => (ran(c) || {}).vars || {};
+  const vget = (c, name) => { const v = vars(c); const k = Object.keys(v).find((x) => x.toLowerCase() === name); return k === undefined ? undefined : v[k]; };
+  const show = (code) => async (c) => { const e = E(c); e.ta.value = code; e.ta.dispatchEvent(new Event("input")); await e.run(); };
+  const pyNear = (fn) => (c) => pyReact(c) || (ran(c) ? fn(c) : null);
   M["py-print"] = { track: "python", title: "Python Says Hi", emoji: "🐍", kind: "python", xpReward: 30, badge: "Pythonista",
     goal: "Print messages with Python", setup: { code: 'print("Hello, Python!")\n', snippets: [{ label: "💬 print", code: 'print("I love coding")' }] },
     steps: [
-      { say: "Real Python! 🐍 Press <b>▶ Run</b> to run this line.", highlight: ".cw-run", check: (c) => /Hello, Python!/.test(out(c)), react: pyReact, praise: "Python spoke! 🗣️" },
-      { say: "Change the words in the quotes to <b>your name</b> and Run.", highlight: ".st-editor", check: (c) => ran(c) && out(c).trim() && !/Hello, Python!/.test(out(c)), hints: ['Keep the quotes: print("Alexa")'], praise: "Nice to meet you! 👋" },
-      { say: "Print <b>3 lines</b>: add two more <code>print(...)</code> lines and Run.", check: (c) => ran(c) && c.ev.lines.length >= 3, hints: ["Each print goes on its own line."], praise: "Three lines! 📜" }
+      { say: "Real Python! 🐍 Press <b>▶ Run</b> to run this line.", highlight: ".cw-run", check: (c) => /hello,? python/.test(low(c)), react: pyNear(() => "Hmm, that's different text. Tap 👀 Show me to get the line back."), demo: show('print("Hello, Python!")\n'), praise: "Python spoke! 🗣️" },
+      { say: "Change the words in the quotes to <b>your name</b> and Run.", highlight: ".st-editor", check: (c) => ran(c) && lines(c).length >= 1 && !/hello,? python/.test(low(c)),
+        react: pyNear(() => "It still says Hello, Python! Change the words <b>inside the quotes</b>."), hints: ['Keep the quotes: print("Alexa")'], demo: show('print("Alexa")\n'), praise: "Nice to meet you! 👋" },
+      { say: "Print <b>3 lines</b>: add two more <code>print(...)</code> lines and Run.", check: (c) => lines(c).length >= 3,
+        react: pyNear((c) => "I see " + lines(c).length + " line" + (lines(c).length === 1 ? "" : "s") + ". Add more print( ) lines — each on its own line."), hints: ["Each print goes on its own line."], demo: show('print("Alexa")\nprint("I love games")\nprint("Bye!")\n'), praise: "Three lines! 📜" }
     ], finale: "print() is how programs talk to you." };
   M["py-vars"] = { track: "python", title: "Variables Backpack", emoji: "🎒", kind: "python", xpReward: 35, badge: "Variable Wizard",
     goal: "Store and change values", setup: { code: 'name = "Alexa"\ncoins = 5\nprint(name, "has", coins, "coins")\n' },
     steps: [
-      { say: "A <b>variable</b> is a labeled box. Run this code!", highlight: ".cw-run", check: (c) => /has 5 coins/.test(out(c)), react: pyReact, praise: "📦 Two variables!" },
-      { say: "Before the print, add <code>coins = coins + 10</code>. What will it say? Run it!", highlight: ".st-editor", check: (c) => /has 15 coins/.test(out(c)), react: (c) => ran(c) ? "It printed: “" + out(c).trim() + "”. Put the coins line ABOVE print." : null, hints: ["Line order matters — Python reads top to bottom."], praise: "5 + 10 = 15! 🪙" },
-      { say: "Make a new variable <code>level = 3</code> and print it too.", check: (c) => ran(c) && c.ev.vars.level !== undefined && /\b3\b/.test(out(c)), hints: ['print("Level", level)'], praise: "Level up! ⬆️" }
+      { say: "A <b>variable</b> is a labeled box. Press <b>▶ Run</b>!", highlight: ".cw-run", check: (c) => ran(c) && (vget(c, "coins") !== undefined || /\bcoins?\b/.test(low(c))),
+        react: pyNear(() => "Something changed. Press 👀 Show me to get the starting code back."), demo: show('name = "Alexa"\ncoins = 5\nprint(name, "has", coins, "coins")\n'), praise: "📦 Two variables: name and coins!" },
+      { say: "Give yourself more coins! Add <code>coins = coins + 10</code> on a line <b>above</b> the print, then Run. (It should say 15.)", highlight: ".st-editor",
+        check: (c) => ran(c) && (/\b15\b/.test(out(c)) || vget(c, "coins") >= 15) && /coins/.test(c.ev.code),
+        react: pyNear((c) => { const o = out(c).trim(); if (/\b5\b/.test(o)) return "It printed “" + Tutor.esc(o) + "”. Python reads top to bottom — move <code>coins = coins + 10</code> <b>above</b> the print line."; return "It printed “" + Tutor.esc(o) + "”. We want coins to be 15."; }),
+        hints: ["Line order matters — Python reads top to bottom.", "Lines: name = … / coins = 5 / coins = coins + 10 / print(…)"], demo: show('name = "Alexa"\ncoins = 5\ncoins = coins + 10\nprint(name, "has", coins, "coins")\n'), praise: "5 + 10 = 15! 🪙" },
+      { say: "Make a new variable <code>level = 3</code> and <b>print</b> it too.",
+        check: (c) => { if (!ran(c)) return false; const lv = vget(c, "level"); return lv !== undefined && out(c).includes(String(lv)); },
+        react: pyNear((c) => vget(c, "level") === undefined ? "I can't find a variable called <b>level</b>. Add a line <code>level = 3</code>." : "You made <b>level</b> — now print it: <code>print(\"Level\", level)</code>"),
+        hints: ['level = 3', 'print("Level", level)'], demo: show('name = "Alexa"\ncoins = 15\nlevel = 3\nprint(name, "has", coins, "coins")\nprint("Level", level)\n'), praise: "Level up! ⬆️" }
     ], finale: "Variables remember things so your program can use them later." };
   M["py-if"] = { track: "python", title: "Secret Door", emoji: "🚪", kind: "python", xpReward: 35, badge: "Decision Maker",
     goal: "Use if / else to make decisions", setup: { code: 'password = "dragon"\n\nif password == "dragon":\n    print("Door opens! 🚪")\nelse:\n    print("Wrong password!")\n' },
     steps: [
-      { say: "<b>if</b> checks something is True. Run it!", highlight: ".cw-run", check: (c) => /Door opens/.test(out(c)), react: pyReact, praise: "Open sesame! ✨" },
-      { say: "Change the first line to <code>password = \"cat\"</code> and Run. What happens?", check: (c) => /Wrong password/.test(out(c)), praise: "The else part ran! 🔒" },
-      { say: "Your turn: make a variable <code>age</code> and print <b>\"Teen!\"</b> if age is 13 or more, else <b>\"Kid!\"</b>.", check: (c) => ran(c) && c.ev.vars.age !== undefined && ((c.ev.vars.age >= 13 && /Teen!/.test(out(c))) || (c.ev.vars.age < 13 && /Kid!/.test(out(c)))),
-        hints: ["if age >= 13:", "Don't forget the colon : and 4 spaces before print."], praise: "Smart program! 🧠" }
+      { say: "<b>if</b> checks something is True. Press ▶ Run!", highlight: ".cw-run", check: (c) => /door opens/.test(low(c)), react: pyNear(() => "Try Show me 👀 to get the starting code back."), demo: show('password = "dragon"\n\nif password == "dragon":\n    print("Door opens! 🚪")\nelse:\n    print("Wrong password!")\n'), praise: "Open sesame! ✨" },
+      { say: "Change the first line to <code>password = \"cat\"</code> and Run. What happens?", check: (c) => /wrong password/.test(low(c)) || (ran(c) && vget(c, "password") !== undefined && vget(c, "password") !== "dragon"),
+        react: pyNear(() => "The door still opened — change <b>dragon</b> on line 1 to something else, like cat."), demo: show('password = "cat"\n\nif password == "dragon":\n    print("Door opens! 🚪")\nelse:\n    print("Wrong password!")\n'), praise: "The else part ran! 🔒" },
+      { say: "Your turn: make <code>age = 11</code> and print <b>Teen!</b> if age is 13 or more, else <b>Kid!</b>",
+        check: (c) => { const a = vget(c, "age"); if (!ran(c) || typeof a !== "number") return false; const o = low(c); return a >= 13 ? /teen/.test(o) : /kid/.test(o); },
+        react: pyNear((c) => { const a = vget(c, "age"); if (typeof a !== "number") return "Make a number variable: <code>age = 11</code> (no quotes)."; return "age is " + a + " — so it should print " + (a >= 13 ? "Teen!" : "Kid!") + ". Check your if line: <code>if age >= 13:</code>"; }),
+        hints: ["if age >= 13:", "Don't forget the colon : and 4 spaces before print."], demo: show('age = 11\nif age >= 13:\n    print("Teen!")\nelse:\n    print("Kid!")\n'), praise: "Smart program! 🧠" }
     ], finale: "if/else lets programs choose — like a game deciding if you win." };
   M["py-loop"] = { track: "python", title: "Loop Rocket", emoji: "🚀", kind: "python", xpReward: 40, badge: "Loop Master",
     goal: "Count down with a for loop", setup: { code: "for i in range(3):\n    print(\"Hip hip hooray!\")\n" },
     steps: [
-      { say: "A <b>for loop</b> repeats. Run it!", highlight: ".cw-run", check: (c) => ran(c) && c.ev.lines.filter((l) => /hooray/i.test(l)).length === 3, react: pyReact, praise: "3 cheers! 🎉" },
-      { say: "Make a <b>countdown</b>: print 10, 9, 8 … 1, then <b>Liftoff!</b> Tip: <code>range(10, 0, -1)</code>.", check: (c) => { const o = out(c); return ran(c) && /^10\b/.test(o.trim()) && /\b1\s*\n?\s*Liftoff/i.test(o); },
-        hints: ["for n in range(10, 0, -1):\n    print(n)", "Put print(\"Liftoff!\") after the loop with NO spaces in front."], praise: "🚀 LIFTOFF!" }
+      { say: "A <b>for loop</b> repeats. Press ▶ Run!", highlight: ".cw-run", check: (c) => lines(c).length >= 3, react: pyNear(() => "Use Show me 👀 to get the loop back."), demo: show("for i in range(3):\n    print(\"Hip hip hooray!\")\n"), praise: "3 cheers! 🎉" },
+      { say: "Make a <b>countdown</b>: print 10, 9, 8 … 1, then <b>Liftoff!</b> Tip: <code>range(10, 0, -1)</code>.",
+        check: (c) => { const L = lines(c); const nums = L.map((l) => (l.match(/-?\d+/) || [null])[0]).filter((x) => x !== null).map(Number); const i10 = nums.indexOf(10); const ok = i10 >= 0 && [10, 9, 8, 7, 6, 5, 4, 3, 2, 1].every((n, k) => nums[i10 + k] === n); return ok && /liftoff|lift off|blast/i.test(L[L.length - 1] || ""); },
+        react: pyNear((c) => { const L = lines(c); if (L.length && /^0$/.test(L[L.length - 2] || "")) return "So close! It goes down to 0 — use <code>range(10, 0, -1)</code> so it stops at 1."; if (!/liftoff/i.test(out(c))) return "The numbers are there? Now print <b>Liftoff!</b> after the loop (no spaces in front)."; return "Count from 10 down to 1, then Liftoff! on the last line."; }),
+        hints: ["for n in range(10, 0, -1):\n    print(n)", "Put print(\"Liftoff!\") after the loop with NO spaces in front."], demo: show('for n in range(10, 0, -1):\n    print(n)\nprint("Liftoff!")\n'), praise: "🚀 LIFTOFF!" }
     ], finale: "Loops let a computer do boring repeats super fast." };
   M["py-func"] = { track: "python", title: "Function Factory", emoji: "🏭", kind: "python", xpReward: 45, badge: "Function Builder",
     goal: "Write your own function", setup: { code: "def greet(name):\n    print(\"Hi\", name)\n\ngreet(\"Byte\")\n" },
     steps: [
-      { say: "<b>def</b> makes a function — a reusable mini-program. Run it, then call <code>greet</code> one more time with a friend's name.", check: (c) => ran(c) && c.ev.lines.filter((l) => /^Hi /.test(l)).length >= 2, react: pyReact, praise: "Reusable! ♻️" },
-      { say: "Write <code>def double(n):</code> that <b>returns</b> n * 2, then <code>print(double(21))</code>.", check: (c) => ran(c) && /\b42\b/.test(out(c)) && /return/.test(c.ev.code), hints: ["def double(n):\n    return n * 2"], praise: "42! The answer to everything. 🌌" }
+      { say: "<b>def</b> makes a function — a reusable mini-program. Call <code>greet</code> one more time with a friend's name, then Run.", check: (c) => lines(c).filter((l) => /^hi\b/i.test(l)).length >= 2,
+        react: pyNear(() => "Add another line at the bottom like <code>greet(\"Sam\")</code> — no spaces in front."), demo: show('def greet(name):\n    print("Hi", name)\n\ngreet("Byte")\ngreet("Sam")\n'), praise: "Reusable! ♻️" },
+      { say: "Write <code>def double(n):</code> that <b>returns</b> n * 2, then <code>print(double(21))</code>.", check: (c) => ran(c) && /\b42(\.0)?\b/.test(out(c)) && /return/.test(c.ev.code),
+        react: pyNear((c) => !/return/.test(c.ev.code) ? "Use <code>return n * 2</code> inside the function." : "Then print it: <code>print(double(21))</code> — it should show 42."), hints: ["def double(n):\n    return n * 2"], demo: show('def double(n):\n    return n * 2\n\nprint(double(21))\n'), praise: "42! 🌌" }
     ], finale: "Functions are how pros keep code tidy." };
 
   // ---------- HTML & CSS ----------

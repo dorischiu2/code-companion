@@ -7,6 +7,8 @@
     if (global.__pyodide) return Promise.resolve(global.__pyodide);
     if (loading) return loading;
     loading = new Promise((res, rej) => {
+      const to = setTimeout(() => { loading = null; rej(new Error("timeout")); }, 60000);
+      const res0 = res, rej0 = rej; res = (v) => { clearTimeout(to); res0(v); }; rej = (e) => { clearTimeout(to); loading = null; rej0(e); };
       const s = document.createElement("script"); s.src = CDN + "pyodide.js";
       s.onload = () => global.loadPyodide({ indexURL: CDN }).then((p) => { global.__pyodide = p; res(p); }, rej);
       s.onerror = () => { loading = null; rej(new Error("offline")); };
@@ -42,7 +44,12 @@
       this.ta.addEventListener("keydown", (e) => { if (e.key === "Tab") { e.preventDefault(); const s = this.ta.selectionStart; this.ta.setRangeText("    ", s, this.ta.selectionEnd, "end"); } });
       this.ta.addEventListener("scroll", () => { this.gut.scrollTop = this.ta.scrollTop; });
       root.querySelector('[data-act="run"]').onclick = () => this.run();
-      loadPy().then(() => { this.ready = true; this.status.textContent = "✅ Python ready"; this.emit("ready"); }, () => { this.status.textContent = "⚠️ Python needs internet the first time"; });
+      this.wake();
+    }
+    wake() {
+      this.status.textContent = "⏳ Waking up Python… (first time takes ~10 s)";
+      return loadPy().then((p) => { this.ready = true; this.status.textContent = "✅ Python ready"; this.emit("ready"); return p; },
+        (e) => { this.status.innerHTML = '⚠️ Python didn\'t load. <button type="button" class="st-btn cw-retry">🔄 Try again</button>'; const r = this.status.querySelector(".cw-retry"); if (r) r.onclick = () => this.wake(); throw e; });
     }
     on(f) { this.listeners.push(f); } off(f) { this.listeners = this.listeners.filter((x) => x !== f); }
     emit(type, d) { const ev = Object.assign({ type }, d || {}); this.listeners.slice().forEach((f) => { try { f(ev); } catch (e) { console.error(e); } }); }
@@ -57,10 +64,18 @@
     }
     line(t, cls) { const d = document.createElement("div"); d.className = "st-out " + (cls || ""); d.textContent = t; this.out.appendChild(d); this.out.scrollTop = this.out.scrollHeight; }
     async run() {
+      if (this.busy) return; this.busy = true;
+      const btn = this.root.querySelector(".cw-run"); if (btn) btn.disabled = true;
+      try { await this.run0(); } finally { this.busy = false; if (btn) btn.disabled = false; }
+    }
+    async run0() {
       this.out.innerHTML = ""; this.gutter(); this.emit("run");
       let py;
-      try { this.status.textContent = "⏳ Starting Python…"; py = await loadPy(); this.status.textContent = "✅ Python ready"; }
-      catch (e) { this.line("⚠️ Python couldn't load (no internet?). Connect once and try again.", "err"); this.emit("pyload-failed"); return; }
+      if (!this.ready) this.line("⏳ Waking up Python… your code will run in a moment!");
+      try { py = global.__pyodide || await this.wake(); }
+      catch (e) { this.out.innerHTML = ""; this.line("⚠️ Python couldn't load (no internet?). Check the connection and press 🔄 Try again.", "err"); this.emit("pyload-failed"); return; }
+      if (!this.ready) { this.ready = true; this.status.textContent = "✅ Python ready"; }
+      this.out.innerHTML = "";
       let buf = [];
       py.setStdout({ batched: (s) => { buf.push(s); this.line(s); } });
       py.setStderr({ batched: (s) => this.line(s, "warn") });
@@ -70,8 +85,8 @@
         g.set("__cc_inputs", py.toPy(inputs));
         await py.runPythonAsync("import builtins\n_q=list(__cc_inputs)\ndef _inp(p=''):\n    print(str(p)+(_q[0] if _q else ''))\n    return _q.pop(0) if _q else ''\nbuiltins.input=_inp", { globals: g });
         await py.runPythonAsync(this.ta.value, { globals: g });
-        const vars = {};
-        try { g.toJs().forEach((v, k) => { if (!String(k).startsWith("_") && (typeof v === "number" || typeof v === "string" || typeof v === "boolean")) vars[k] = v; }); } catch (e) {}
+        let vars = {};
+        try { vars = JSON.parse(py.runPython("import json as _j\n_j.dumps({k: v for k, v in dict(globals()).items() if not k.startswith('_') and type(v) in (int, float, str, bool)})", { globals: g })); } catch (e) { console.warn(e); }
         const fns = [];
         const stdout = buf.join("\n");
         this.lastG = g;
